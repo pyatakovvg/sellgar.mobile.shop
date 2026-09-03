@@ -1,0 +1,60 @@
+{
+  "name": "root",
+  "license": "UNLICENSED",
+  "scripts": {
+    "update": "yarn upgrade-interactive",
+    "audit": "yarn npm audit -A -R --environment production --severity moderate",
+    "android:mobile": "yarn workspace @client/mobile android",
+    "dev:admin_ui": "yarn workspace @client/admin start",
+    "dev:mobile": "yarn workspace @client/mobile start",
+    "build:admin_ui": "yarn workspaces foreach --from '@client/admin' -R -t run build",
+    "test": "vitest run --cache=false",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
+    "@types/node": "26.4.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "@types/reflect-metadata": "0.1.0",
+    "@typescript-eslint/eslint-plugin": "8.69.0",
+    "@typescript-eslint/parser": "8.69.0",
+    "@vitest/ui": "5.0.0",
+    "eslint": "10.9.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.6",
+    "jiti": "2.7.0",
+    "jsdom": "30.0.1",
+    "prettier": "3.9.6",
+    "stylelint": "17.14.1",
+    "stylelint-config-prettier": "9.0.5",
+    "stylelint-prettier": "5.0.3",
+    "typescript": "6.0.3",
+    "vitest": "5.0.0"
+  },
+  "resolutions": {
+    "@babel/runtime": ">=7.26.10"
+  },
+  "workspaces": {
+    "packages": [
+      "clients/**/*",
+      "helpers/*",
+      "library/*",
+      "frames/*",
+      "pages/**/*",
+      "utils/**/*",
+      "widgets/**/*",
+      "layouts/**/*"
+    ],
+    "nohoist": []
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "yarn@4.18.0"
+}
