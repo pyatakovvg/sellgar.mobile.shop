@@ -1,6 +1,16 @@
-pluginManagement { includeBuild("../../../node_modules/@react-native/gradle-plugin") }
+pluginManagement {
+    def hostRoot = settingsDir.parentFile
+    def hostConfig = new groovy.json.JsonSlurper().parse(new File(hostRoot, "host.config.json"))
+    def workspaceRoot = new File(hostRoot, hostConfig.workspaceRoot as String).canonicalFile
+
+    settings.ext.workspaceRootDir = workspaceRoot
+    includeBuild(new File(workspaceRoot, "node_modules/@react-native/gradle-plugin").absolutePath)
+}
 plugins { id("com.facebook.react.settings") }
 extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
-rootProject.name = 'SellgarAppV2NativePlayground'
+
+def hostConfig = new groovy.json.JsonSlurper().parse(new File(settingsDir.parentFile, "host.config.json"))
+
+rootProject.name = hostConfig.name as String
 include ':app'
-includeBuild('../../../node_modules/@react-native/gradle-plugin')
+includeBuild(new File(settings.ext.workspaceRootDir, "node_modules/@react-native/gradle-plugin").absolutePath)

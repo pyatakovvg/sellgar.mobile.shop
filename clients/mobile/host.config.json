@@ -1,0 +1,13 @@
+{
+  "name": "SellgarAppV2NativePlayground",
+  "displayName": "App V2 Native Playground",
+  "entry": "src/index.tsx",
+  "workspaceRoot": "../..",
+  "deepLinkScheme": "sellgar-app-v2",
+  "android": {
+    "namespace": "com.sellgar.appv2playground",
+    "applicationId": "com.sellgar.appv2playground",
+    "versionCode": 1,
+    "versionName": "1.0"
+  }
+}

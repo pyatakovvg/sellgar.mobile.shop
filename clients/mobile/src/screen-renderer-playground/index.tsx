@@ -3,7 +3,7 @@ import { AppRegistry, Pressable, ScrollView, StatusBar, StyleSheet, Text, View }
 
 import { ScreenAnimation, ScreenRenderer, type ScreenPresentation } from '@sellgar/app/native';
 
-import { name as appName } from '../../app.json';
+import { name as appName } from '../../host.config.json';
 
 interface VisualSample {
   readonly accent: string;

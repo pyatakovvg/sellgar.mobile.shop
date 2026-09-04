@@ -2,12 +2,12 @@ import { AppRegistry } from 'react-native';
 
 import { createNativeLinkingTransport, createNativeRouterBridge } from '@sellgar/app/native';
 
-import { name as appName } from '../app.json';
+import { deepLinkScheme, name as appName } from '../host.config.json';
 import { MobileApplication } from './application';
 
 const app = new MobileApplication({
   routerBridge: createNativeRouterBridge({
-    transport: createNativeLinkingTransport({ prefixes: ['sellgar-app-v2://'] }),
+    transport: createNativeLinkingTransport({ prefixes: [`${deepLinkScheme}://`] }),
   }),
 });
 

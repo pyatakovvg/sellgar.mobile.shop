@@ -1,4 +1,4 @@
-package com.sellgar.appv2playground
+package com.sellgar.nativehost
 
 import android.app.Application
 import com.facebook.react.PackageList
@@ -11,7 +11,7 @@ class MainApplication : Application(), ReactApplication {
   override val reactHost: ReactHost by lazy {
     getDefaultReactHost(
       context = applicationContext,
-      jsMainModulePath = "clients/mobile/src/index",
+      jsMainModulePath = HostConfiguration.require(HostConfiguration.MAIN_MODULE_PATH),
       packageList =
         PackageList(this).packages.apply {
           // Packages that cannot be autolinked yet can be added manually here, for example:
@@ -22,6 +22,7 @@ class MainApplication : Application(), ReactApplication {
 
   override fun onCreate() {
     super.onCreate()
+    HostConfiguration.initialize(this)
     loadReactNative(this)
   }
 }

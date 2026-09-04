@@ -2,15 +2,27 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
+def hostRootDir = rootDir.parentFile
+def hostConfig = new groovy.json.JsonSlurper().parse(new File(hostRootDir, "host.config.json"))
+def workspaceRootDir = new File(hostRootDir, hostConfig.workspaceRoot as String).canonicalFile
+def workspaceNodeModulesDir = new File(workspaceRootDir, "node_modules")
+def hostEntryFile = new File(hostRootDir, hostConfig.entry as String).canonicalFile
+def hostEntryModule = workspaceRootDir
+    .toPath()
+    .relativize(hostEntryFile.toPath())
+    .toString()
+    .replace(File.separator, "/")
+    .replaceFirst(/\.[^.]+$/, "")
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
  */
 react {
-    entryFile = file("$rootDir/../src/index.tsx")
-    reactNativeDir = file("../../../../node_modules/react-native")
-    codegenDir = file("../../../../node_modules/@react-native/codegen")
-    cliFile = file("../../../../node_modules/react-native/cli.js")
+    entryFile = hostEntryFile
+    reactNativeDir = new File(workspaceNodeModulesDir, "react-native")
+    codegenDir = new File(workspaceNodeModulesDir, "@react-native/codegen")
+    cliFile = new File(workspaceNodeModulesDir, "react-native/cli.js")
 
     /* Folders */
     //   The root of your project, i.e. where "package.json" lives. Default is '../..'
@@ -82,13 +94,19 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.sellgar.appv2playground"
+    namespace hostConfig.android.namespace as String
     defaultConfig {
-        applicationId "com.sellgar.appv2playground"
+        applicationId hostConfig.android.applicationId as String
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode hostConfig.android.versionCode as Integer
+        versionName hostConfig.android.versionName as String
+        manifestPlaceholders = [
+            deepLinkScheme: hostConfig.deepLinkScheme as String,
+            reactNativeComponentName: hostConfig.name as String,
+            reactNativeMainModulePath: hostEntryModule,
+        ]
+        resValue "string", "app_name", hostConfig.displayName as String
     }
     signingConfigs {
         debug {
