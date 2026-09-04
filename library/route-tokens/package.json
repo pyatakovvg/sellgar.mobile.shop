@@ -3,7 +3,7 @@
   "type": "module",
   "name": "@library/route-tokens",
   "version": "0.0.1",
-  "description": "Typed route identities for Sellgar Admin",
+  "description": "Typed route identities for Sellgar Mobile Shop",
   "license": "UNLICENSED",
   "main": "src/index.ts"
 }

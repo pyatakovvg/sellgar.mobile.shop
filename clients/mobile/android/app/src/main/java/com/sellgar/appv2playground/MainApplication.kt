@@ -11,7 +11,7 @@ class MainApplication : Application(), ReactApplication {
   override val reactHost: ReactHost by lazy {
     getDefaultReactHost(
       context = applicationContext,
-      jsMainModulePath = "src/index",
+      jsMainModulePath = "clients/mobile/src/index",
       packageList =
         PackageList(this).packages.apply {
           // Packages that cannot be autolinked yet can be added manually here, for example:

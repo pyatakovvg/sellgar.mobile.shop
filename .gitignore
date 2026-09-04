@@ -8,6 +8,7 @@ lib/
 types/
 node_modules
 .gradle/
+.kotlin/
 .cxx/
 
 .env
