@@ -1,0 +1,4 @@
+.yarn/
+node_modules/
+library/sellgar.app.ui/
+clients/mobile/android/
