@@ -1,4 +1,4 @@
-import { BindingModuleInterface, type BindingRegistryInterface } from '@sellgar/app-v2';
+import { BindingModuleInterface, type BindingRegistryInterface } from '@sellgar/app';
 
 import { BrandCreateControllerInterface } from './controller/brand-create/brand-create-controller.interface.ts';
 import { BrandCreateController } from './controller/brand-create/brand-create.controller.ts';

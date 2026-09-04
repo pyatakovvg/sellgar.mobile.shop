@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { useLoaderData, useNavigate } from '@sellgar/app-v2/native';
+import { useLoaderData, useNavigate } from '@sellgar/app/native';
 
 import { BrandCreateControllerInterface } from '../classes/controller/brand-create/brand-create-controller.interface.ts';
 

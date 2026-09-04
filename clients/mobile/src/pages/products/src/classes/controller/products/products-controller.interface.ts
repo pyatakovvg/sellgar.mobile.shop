@@ -1,4 +1,4 @@
-import type { ControllerArgs } from '@sellgar/app-v2';
+import type { ControllerArgs } from '@sellgar/app';
 
 export interface ProductsLoaderData {
   readonly duration: number;

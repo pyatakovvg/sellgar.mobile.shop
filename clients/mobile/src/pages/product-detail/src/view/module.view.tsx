@@ -2,8 +2,8 @@ import React from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { ProductModifyRoute } from '@library/route-tokens';
-import type { RouteParams } from '@sellgar/app-v2';
-import { NavItem, useLoaderData, useNavigate, useParams, useSubmit } from '@sellgar/app-v2/native';
+import type { RouteParams } from '@sellgar/app';
+import { NavItem, useLoaderData, useNavigate, useParams, useSubmit } from '@sellgar/app/native';
 
 import { ProductDetailControllerInterface } from '../classes/controller/product-detail/product-detail-controller.interface.ts';
 

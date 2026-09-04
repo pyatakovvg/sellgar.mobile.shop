@@ -1,4 +1,4 @@
-import type { ControllerArgs } from '@sellgar/app-v2';
+import type { ControllerArgs } from '@sellgar/app';
 
 export abstract class SignInControllerInterface {
   abstract loader(args: ControllerArgs): Promise<void>;

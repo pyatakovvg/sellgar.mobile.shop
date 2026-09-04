@@ -1,4 +1,4 @@
-import { Controller, Inject, SessionRuntimeStateInterface } from '@sellgar/app-v2';
+import { Controller, Inject, SessionRuntimeStateInterface } from '@sellgar/app';
 
 import { delay } from '../../../../../shared/runtime/delay';
 import { SignInControllerInterface } from './sign-in-controller.interface.ts';

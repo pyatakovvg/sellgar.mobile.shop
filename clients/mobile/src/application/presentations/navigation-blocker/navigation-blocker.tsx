@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { NavigationBlockerViewProps } from '@sellgar/app-v2/native';
+import type { NavigationBlockerViewProps } from '@sellgar/app/native';
 
 import { Dialog } from '../../../shared/ui/dialog';
 

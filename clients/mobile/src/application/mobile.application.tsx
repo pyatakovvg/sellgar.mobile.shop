@@ -7,8 +7,8 @@ import {
   NotificationPresentation,
   UserRequestFeature,
   UserRequestPresentation,
-} from '@sellgar/app-v2/native';
-import { UseBindings } from '@sellgar/app-v2';
+} from '@sellgar/app/native';
+import { UseBindings } from '@sellgar/app';
 
 import { BaseLayout } from '../layouts/base';
 import { Status } from './components/status';

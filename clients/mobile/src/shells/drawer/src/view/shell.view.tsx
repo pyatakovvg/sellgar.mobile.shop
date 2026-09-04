@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { ShellScrollView, type ShellContextInterface, useShell, useSafeAreaInsets } from '@sellgar/app-v2/native';
+import { ShellScrollView, type ShellContextInterface, useShell, useSafeAreaInsets } from '@sellgar/app/native';
 
 export const ShellView: React.FC<ShellContextInterface> = (props) => {
   const { top } = useSafeAreaInsets();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { useSubmit } from '@sellgar/app-v2/native';
+import { useSubmit } from '@sellgar/app/native';
 
 import { SignInControllerInterface } from '../classes/controller/sign-in-controller.interface.ts';
 

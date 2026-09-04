@@ -1,5 +1,5 @@
-import { UseBindings } from '@sellgar/app-v2';
-import { Module } from '@sellgar/app-v2/native';
+import { UseBindings } from '@sellgar/app';
+import { Module } from '@sellgar/app/native';
 
 import { ProductsBindings } from './classes/classes.bindings.ts';
 import { ModuleView } from './view/module.view.tsx';

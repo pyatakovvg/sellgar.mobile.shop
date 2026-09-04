@@ -1,6 +1,6 @@
 import { AppRegistry } from 'react-native';
 
-import { createNativeLinkingTransport, createNativeRouterBridge } from '@sellgar/app-v2/native';
+import { createNativeLinkingTransport, createNativeRouterBridge } from '@sellgar/app/native';
 
 import { name as appName } from '../app.json';
 import { MobileApplication } from './application';

@@ -1,4 +1,4 @@
-import { Controller, Inject, RouteQueryServiceInterface } from '@sellgar/app-v2';
+import { Controller, Inject, RouteQueryServiceInterface } from '@sellgar/app';
 
 import { ProductsFilterQuery } from '../../query/products-filter.query.ts';
 import { ProductsFilterControllerInterface } from './products-filter-controller.interface.ts';

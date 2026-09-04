@@ -5,8 +5,8 @@ import type {
   UserRequestAlertViewProps,
   UserRequestConfirmViewProps,
   UserRequestPromptViewProps,
-} from '@sellgar/app-v2/native';
-import { useScreenAutoFocus } from '@sellgar/app-v2/native';
+} from '@sellgar/app/native';
+import { useScreenAutoFocus } from '@sellgar/app/native';
 
 import { Dialog } from '../../../shared/ui/dialog';
 

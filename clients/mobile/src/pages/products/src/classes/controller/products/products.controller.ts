@@ -1,4 +1,4 @@
-import { Controller, Inject, RouteQueryServiceInterface } from '@sellgar/app-v2';
+import { Controller, Inject, RouteQueryServiceInterface } from '@sellgar/app';
 
 import { delay } from '../../../../../../shared/runtime/delay';
 import { ProductsFilterQuery } from '../../query/products-filter.query.ts';

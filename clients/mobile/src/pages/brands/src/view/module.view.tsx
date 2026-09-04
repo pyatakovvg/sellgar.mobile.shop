@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BrandCreateRoute, BrandRoute, ProductsRoute } from '@library/route-tokens';
-import { useLoaderData, useNavigate } from '@sellgar/app-v2/native';
+import { useLoaderData, useNavigate } from '@sellgar/app/native';
 
 import { BrandsControllerInterface } from '../classes/controller/brands/brands-controller.interface.ts';
 

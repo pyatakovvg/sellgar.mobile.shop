@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { BrandsRoute, ProductModifyRoute } from '@library/route-tokens';
-import { useLoaderData, useNavigate, useSubmit } from '@sellgar/app-v2/native';
+import { useLoaderData, useNavigate, useSubmit } from '@sellgar/app/native';
 
 import { ProductsFilterControllerInterface } from '../classes/controller/products-filter/products-filter-controller.interface.ts';
 import { ProductsControllerInterface } from '../classes/controller/products/products-controller.interface.ts';

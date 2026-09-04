@@ -1,4 +1,4 @@
-import { Controller, Inject, RequestExecutorInterface, UnauthorizedException } from '@sellgar/app-v2';
+import { Controller, Inject, RequestExecutorInterface, UnauthorizedException } from '@sellgar/app';
 
 import { delay } from '../../../../../../shared/runtime/delay';
 import {

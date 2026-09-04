@@ -1,5 +1,5 @@
-import { UseBindings } from '@sellgar/app-v2';
-import { Widget, WidgetDefinition } from '@sellgar/app-v2/native';
+import { UseBindings } from '@sellgar/app';
+import { Widget, WidgetDefinition } from '@sellgar/app/native';
 
 import { SignOutBindings } from './classes/classes.bindings.ts';
 import { WidgetView } from './view/widget.view.tsx';

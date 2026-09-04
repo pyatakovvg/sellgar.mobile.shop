@@ -2,8 +2,8 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BrandsRoute, ProductsRoute } from '@library/route-tokens';
-import type { NavigationRequestFactory } from '@sellgar/app-v2';
-import { TabItem, type LayoutViewProps, useSafeAreaInsets, WidgetHost } from '@sellgar/app-v2/native';
+import type { NavigationRequestFactory } from '@sellgar/app';
+import { TabItem, type LayoutViewProps, useSafeAreaInsets, WidgetHost } from '@sellgar/app/native';
 
 import { SignOutWidget } from '../../../../widgets/sign-out/src';
 

@@ -1,4 +1,4 @@
-import { Layout } from '@sellgar/app-v2/native';
+import { Layout } from '@sellgar/app/native';
 
 import { LayoutView } from './view/layout.view.tsx';
 

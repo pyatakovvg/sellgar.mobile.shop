@@ -2,7 +2,7 @@ import {
   BindingModuleInterface,
   SessionExpirationNotifierInterface,
   type BindingRegistryInterface,
-} from '@sellgar/app-v2';
+} from '@sellgar/app';
 
 import { SessionExpirationNotifier } from '../session-expiration-notifier.ts';
 

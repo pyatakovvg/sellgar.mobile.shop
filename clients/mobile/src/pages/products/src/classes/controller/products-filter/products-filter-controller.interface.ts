@@ -1,4 +1,4 @@
-import type { ControllerArgs, QueryInput, QueryValue, WithPayload } from '@sellgar/app-v2';
+import type { ControllerArgs, QueryInput, QueryValue, WithPayload } from '@sellgar/app';
 
 import type { ProductsFilterQuery } from '../../query/products-filter.query.ts';
 

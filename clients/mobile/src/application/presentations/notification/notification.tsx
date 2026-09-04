@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import type { NotificationViewProps } from '@sellgar/app-v2/native';
+import type { NotificationViewProps } from '@sellgar/app/native';
 
 type NotificationTone = 'destructive' | 'info' | 'success';
 

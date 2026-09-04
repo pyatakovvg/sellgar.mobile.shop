@@ -1,8 +1,8 @@
 # `@client/mobile`
 
-Android React Native playground для стабилизации `@sellgar/app-v2/native`.
+Android React Native playground для стабилизации `@sellgar/app/native`.
 Приложение не зависит от существующего `mobile/sellgar.mobile` и использует
-публичные entrypoints `@sellgar/app-v2` и `@sellgar/app-v2/native`.
+публичные entrypoints `@sellgar/app` и `@sellgar/app/native`.
 
 ## Сценарии
 

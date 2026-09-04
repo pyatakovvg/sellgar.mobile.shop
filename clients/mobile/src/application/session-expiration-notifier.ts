@@ -4,7 +4,7 @@ import {
   SessionExpirationNotifierInterface,
   type SessionExpirationNotificationContext,
   UserRequestServiceInterface,
-} from '@sellgar/app-v2';
+} from '@sellgar/app';
 
 @Injectable()
 export class SessionExpirationNotifier extends SessionExpirationNotifierInterface {

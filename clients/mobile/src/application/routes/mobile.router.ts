@@ -6,8 +6,8 @@ import {
   ProductsRoute,
   SignInRoute,
 } from '@library/route-tokens';
-import { param, segments } from '@sellgar/app-v2';
-import { Route, Router, ScreenAnimation } from '@sellgar/app-v2/native';
+import { param, segments } from '@sellgar/app';
+import { Route, Router, ScreenAnimation } from '@sellgar/app/native';
 
 import { MainTabsLayout } from '../../layouts/main-tabs/src';
 import { RequireAnonymousSessionPolicy, RequireAuthenticatedSessionPolicy } from '../policies';

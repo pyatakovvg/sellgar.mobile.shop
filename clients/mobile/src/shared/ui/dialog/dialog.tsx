@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, type TextStyle, View } from 'react-native';
 
-import { KeyboardScrollView } from '@sellgar/app-v2/native';
+import { KeyboardScrollView } from '@sellgar/app/native';
 
 export interface DialogAction {
   readonly label: React.ReactNode;

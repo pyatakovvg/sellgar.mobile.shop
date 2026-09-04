@@ -1,4 +1,4 @@
-import { Shell, ShellInterface } from '@sellgar/app-v2/native';
+import { Shell, ShellInterface } from '@sellgar/app/native';
 
 import { ShellView } from './view/shell.view.tsx';
 

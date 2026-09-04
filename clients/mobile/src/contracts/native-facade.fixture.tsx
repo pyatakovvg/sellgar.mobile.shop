@@ -25,7 +25,7 @@ import {
   UserRequestPresentation,
   KeyboardScrollView,
   KeyboardSurface,
-} from '@sellgar/app-v2/native';
+} from '@sellgar/app/native';
 
 class FixtureRoute {}
 

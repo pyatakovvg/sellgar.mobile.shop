@@ -1,5 +1,5 @@
 import { ProductModifyRoute } from '@library/route-tokens';
-import type { ControllerArgs, RouteParams, WithParams } from '@sellgar/app-v2';
+import type { ControllerArgs, RouteParams, WithParams } from '@sellgar/app';
 
 export interface ProductDetailLoaderData {
   readonly duration: number;

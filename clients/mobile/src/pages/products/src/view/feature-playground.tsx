@@ -7,7 +7,7 @@ import {
   useBlocker,
   useNotification,
   useUserRequest,
-} from '@sellgar/app-v2/native';
+} from '@sellgar/app/native';
 
 import { Dialog } from '../../../../shared/ui/dialog';
 

@@ -1,4 +1,4 @@
-import { Query } from '@sellgar/app-v2';
+import { Query } from '@sellgar/app';
 
 @Query()
 export class ProductsFilterQuery {

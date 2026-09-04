@@ -1,4 +1,4 @@
-import { Controller } from '@sellgar/app-v2';
+import { Controller } from '@sellgar/app';
 
 import { delay } from '../../../../../../shared/runtime/delay';
 import { BrandCreateControllerInterface, type BrandCreateLoaderData } from './brand-create-controller.interface.ts';

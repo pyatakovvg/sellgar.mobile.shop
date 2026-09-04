@@ -1,4 +1,4 @@
-import { BindingModuleInterface, type BindingRegistryInterface } from '@sellgar/app-v2';
+import { BindingModuleInterface, type BindingRegistryInterface } from '@sellgar/app';
 
 import { SignOutControllerInterface } from './controller/sign-out-controller.interface.ts';
 import { SignOutController } from './controller/sign-out.controller.ts';

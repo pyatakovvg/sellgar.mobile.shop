@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppRegistry, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
-import { ScreenAnimation, ScreenRenderer, type ScreenPresentation } from '@sellgar/app-v2/native';
+import { ScreenAnimation, ScreenRenderer, type ScreenPresentation } from '@sellgar/app/native';
 
 import { name as appName } from '../../app.json';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text } from 'react-native';
 
-import { useSafeAreaInsets, useSubmit } from '@sellgar/app-v2/native';
+import { useSafeAreaInsets, useSubmit } from '@sellgar/app/native';
 
 import { SignOutControllerInterface } from '../classes/controller/sign-out-controller.interface.ts';
 
