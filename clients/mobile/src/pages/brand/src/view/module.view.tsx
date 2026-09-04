@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { useLoaderData, useNavigate } from '@sellgar/app/native';
+import { useLoaderData, useNavigate, Viewport } from '@sellgar/app/native';
 
 import { BrandControllerInterface } from '../classes/controller/brand/brand-controller.interface.ts';
 
@@ -10,22 +10,29 @@ export const ModuleView: React.FC = () => {
   const runtime = useLoaderData(BrandControllerInterface);
 
   return (
-    <View style={styles.content}>
-      <Text style={styles.eyebrow}>Brands #45</Text>
-      <Text style={styles.title}>Brand #45</Text>
-      <Text style={styles.copy}>Switching tabs must retain the previous core runtime and its controller state.</Text>
-      <Text style={styles.probe}>
-        controller #{runtime.instance}, loader #{runtime.loads}, {runtime.duration} ms
-      </Text>
-      <Pressable
-        accessibilityLabel="Back"
-        accessibilityRole="button"
-        onPress={() => void navigate.back()}
-        style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
-      >
-        <Text style={styles.buttonText}>Back</Text>
-      </Pressable>
-    </View>
+    <Viewport>
+      <Viewport.Slot grow>
+        <View style={styles.content}>
+          <Text style={styles.eyebrow}>Brands #45</Text>
+          <Text style={styles.title}>Brand #45</Text>
+          <Text style={styles.copy}>
+            Switching tabs must retain the previous core runtime and its controller state.
+          </Text>
+          <Text style={styles.probe}>
+            controller #{runtime.instance}, loader #{runtime.loads}, {runtime.duration} ms
+          </Text>
+          <Pressable
+            accessibilityLabel="Back"
+            accessibilityRole="button"
+            onPress={() => void navigate.back()}
+            style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
+          >
+            <Text style={styles.buttonText}>Back</Text>
+          </Pressable>
+        </View>
+      </Viewport.Slot>
+      <Viewport.Refreshable />
+    </Viewport>
   );
 };
 

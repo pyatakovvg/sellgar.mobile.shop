@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { useSubmit } from '@sellgar/app/native';
+import { useSubmit, Viewport } from '@sellgar/app/native';
 
 import { SignInControllerInterface } from '../classes/controller/sign-in-controller.interface.ts';
 
@@ -9,24 +9,28 @@ export const ModuleView: React.FC = () => {
   const submit = useSubmit(SignInControllerInterface);
 
   return (
-    <View style={styles.root}>
-      <Text style={styles.eyebrow}>Anonymous routing branch</Text>
-      <Text style={styles.title}>Sign in</Text>
-      <Text style={styles.copy}>
-        Authentication changes core SessionRuntimeState. Policies replace this branch with the protected one.
-      </Text>
-      <Pressable
-        {...{
-          accessibilityLabel: 'Sign in',
-          accessibilityRole: 'button' as const,
-        }}
-        disabled={submit.inProcess}
-        onPress={() => void submit()}
-        style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
-      >
-        {submit.inProcess ? <ActivityIndicator color="#11131a" /> : <Text style={styles.buttonText}>Sign in</Text>}
-      </Pressable>
-    </View>
+    <Viewport>
+      <Viewport.Slot grow>
+        <View style={styles.root}>
+          <Text style={styles.eyebrow}>Anonymous routing branch</Text>
+          <Text style={styles.title}>Sign in</Text>
+          <Text style={styles.copy}>
+            Authentication changes core SessionRuntimeState. Policies replace this branch with the protected one.
+          </Text>
+          <Pressable
+            {...{
+              accessibilityLabel: 'Sign in',
+              accessibilityRole: 'button' as const,
+            }}
+            disabled={submit.inProcess}
+            onPress={() => void submit()}
+            style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
+          >
+            {submit.inProcess ? <ActivityIndicator color="#11131a" /> : <Text style={styles.buttonText}>Sign in</Text>}
+          </Pressable>
+        </View>
+      </Viewport.Slot>
+    </Viewport>
   );
 };
 

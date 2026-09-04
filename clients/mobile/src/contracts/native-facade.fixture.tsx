@@ -15,16 +15,14 @@ import {
   ScreenAnimation,
   Router,
   Shell,
-  ShellScrollView,
   type ShellContextInterface,
   ShellInterface,
+  Viewport,
   Widget,
   WidgetDefinition,
   WidgetHost,
   UserRequestFeature,
   UserRequestPresentation,
-  KeyboardScrollView,
-  KeyboardSurface,
 } from '@sellgar/app/native';
 
 class FixtureRoute {}
@@ -43,13 +41,16 @@ interface FixtureWidgetProps {
 class FixtureWidget extends WidgetDefinition<FixtureWidgetProps> {}
 
 const FixtureShellView: React.FC<ShellContextInterface> = (props) => (
-  <ShellScrollView>{props.children}</ShellScrollView>
+  <Viewport>
+    <Viewport.Slot>{props.children}</Viewport.Slot>
+  </Viewport>
 );
 
-const FixtureKeyboardSurface: React.FC<React.PropsWithChildren> = (props) => (
-  <KeyboardSurface>
-    <KeyboardScrollView>{props.children}</KeyboardScrollView>
-  </KeyboardSurface>
+const FixtureViewport: React.FC<React.PropsWithChildren> = (props) => (
+  <Viewport>
+    <Viewport.Slot grow>{props.children}</Viewport.Slot>
+    <Viewport.Refreshable />
+  </Viewport>
 );
 
 @Shell({ view: FixtureShellView })
@@ -89,5 +90,5 @@ class FixtureApplication extends Application {
 const fixtureView = <WidgetHost props={{ value: 'fixture' }} token={FixtureWidget} />;
 
 void FixtureApplication;
-void FixtureKeyboardSurface;
+void FixtureViewport;
 void fixtureView;

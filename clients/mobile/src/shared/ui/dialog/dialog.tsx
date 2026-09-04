@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, type TextStyle, View } from 'react-native';
 
-import { KeyboardScrollView } from '@sellgar/app/native';
+import { Viewport } from '@sellgar/app/native';
 
 export interface DialogAction {
   readonly label: React.ReactNode;
@@ -17,47 +17,43 @@ interface DialogProps {
   readonly title?: React.ReactNode;
 }
 
-const DIALOG_ACTIONS_KEYBOARD_OFFSET = 80;
-
 export const Dialog: React.FC<DialogProps> = (props) => {
   return (
-    <KeyboardScrollView
-      accessibilityViewIsModal
-      bounces={false}
-      bottomOffset={DIALOG_ACTIONS_KEYBOARD_OFFSET}
-      contentContainerStyle={styles.backdrop}
-      overScrollMode="never"
-      showsVerticalScrollIndicator={false}
-      style={styles.surface}
-    >
-      <View style={styles.dialog}>
-        {renderContent(props.title, styles.title)}
-        {renderContent(props.description, styles.description)}
-        {props.children}
-        <View style={styles.actions}>
-          {props.actions.map((action, index) => (
-            <Pressable
-              accessibilityRole="button"
-              disabled={action.processing}
-              key={index}
-              onPress={action.onPress}
-              style={({ pressed }) => [
-                styles.action,
-                action.tone === 'primary' ? styles.primary : null,
-                action.tone === 'destructive' ? styles.destructive : null,
-                pressed ? styles.pressed : null,
-              ]}
-            >
-              {action.processing ? (
-                <ActivityIndicator color="#f7f7fb" />
-              ) : (
-                renderContent(action.label, styles.actionText)
-              )}
-            </Pressable>
-          ))}
-        </View>
-      </View>
-    </KeyboardScrollView>
+    <View accessibilityViewIsModal style={styles.surface}>
+      <Viewport>
+        <Viewport.Slot grow>
+          <View style={styles.backdrop}>
+            <View style={styles.dialog}>
+              {renderContent(props.title, styles.title)}
+              {renderContent(props.description, styles.description)}
+              {props.children}
+              <View style={styles.actions}>
+                {props.actions.map((action, index) => (
+                  <Pressable
+                    accessibilityRole="button"
+                    disabled={action.processing}
+                    key={index}
+                    onPress={action.onPress}
+                    style={({ pressed }) => [
+                      styles.action,
+                      action.tone === 'primary' ? styles.primary : null,
+                      action.tone === 'destructive' ? styles.destructive : null,
+                      pressed ? styles.pressed : null,
+                    ]}
+                  >
+                    {action.processing ? (
+                      <ActivityIndicator color="#f7f7fb" />
+                    ) : (
+                      renderContent(action.label, styles.actionText)
+                    )}
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          </View>
+        </Viewport.Slot>
+      </Viewport>
+    </View>
   );
 };
 
@@ -92,7 +88,7 @@ const styles = StyleSheet.create({
   backdrop: {
     alignItems: 'center',
     backgroundColor: 'rgba(3, 5, 10, 0.72)',
-    flexGrow: 1,
+    flex: 1,
     justifyContent: 'center',
     padding: 24,
   },

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { ShellScrollView, type ShellContextInterface, useShell, useSafeAreaInsets } from '@sellgar/app/native';
+import { type ShellContextInterface, useSafeAreaInsets, Viewport } from '@sellgar/app/native';
 
 export const ShellView: React.FC<ShellContextInterface> = (props) => {
   const { top } = useSafeAreaInsets();
@@ -11,15 +11,14 @@ export const ShellView: React.FC<ShellContextInterface> = (props) => {
       <View style={styles.header}>
         <View style={styles.grabber} />
       </View>
-      <ShellScrollView contentContainerStyle={styles.content}>{props.children}</ShellScrollView>
+      <Viewport>
+        <Viewport.Slot>{props.children}</Viewport.Slot>
+      </Viewport>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  content: {
-    paddingBottom: 0,
-  },
   grabber: {
     backgroundColor: '#666b7a',
     borderRadius: 2,

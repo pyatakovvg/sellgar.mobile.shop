@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { BrandsRoute, ProductModifyRoute } from '@library/route-tokens';
-import { useLoaderData, useNavigate, useSubmit } from '@sellgar/app/native';
+import { useLoaderData, useNavigate, useSubmit, Viewport } from '@sellgar/app/native';
 
 import { ProductsFilterControllerInterface } from '../classes/controller/products-filter/products-filter-controller.interface.ts';
 import { ProductsControllerInterface } from '../classes/controller/products/products-controller.interface.ts';
@@ -16,27 +16,32 @@ export const ModuleView: React.FC = () => {
   const submitFilter = useSubmit(ProductsFilterControllerInterface);
 
   return (
-    <View style={styles.content}>
-      <Text style={styles.eyebrow}>Products tab</Text>
-      <Text style={styles.title}>Products</Text>
-      <Text style={styles.copy}>This tab owns an ordinary Route.routes stack.</Text>
-      <Text style={styles.probe}>
-        controller #{runtime.instance}, loader #{runtime.loads}, {runtime.duration} ms
-      </Text>
-      <Text style={styles.query}>query search: {filter.search ?? 'none'}</Text>
-      <Text style={styles.query}>data filter: {runtime.search ?? 'none'}</Text>
-      <Action
-        inProcess={submitFilter.inProcess}
-        label={filter.search ? 'Clear query' : 'Set query native'}
-        onPress={() => void submitFilter({ search: filter.search ? null : 'native' })}
-      />
-      <Action
-        label="Open product native-42"
-        onPress={() => void navigate.to(ProductModifyRoute, { params: { uuid: 'native-42' } })}
-      />
-      <Action label="Open brands tab" onPress={() => void navigate.to(BrandsRoute)} />
-      <FeaturePlayground />
-    </View>
+    <Viewport>
+      <Viewport.Slot grow>
+        <View style={styles.content}>
+          <Text style={styles.eyebrow}>Products tab</Text>
+          <Text style={styles.title}>Products</Text>
+          <Text style={styles.copy}>This tab owns an ordinary Route.routes stack.</Text>
+          <Text style={styles.probe}>
+            controller #{runtime.instance}, loader #{runtime.loads}, {runtime.duration} ms
+          </Text>
+          <Text style={styles.query}>query search: {filter.search ?? 'none'}</Text>
+          <Text style={styles.query}>data filter: {runtime.search ?? 'none'}</Text>
+          <Action
+            inProcess={submitFilter.inProcess}
+            label={filter.search ? 'Clear query' : 'Set query native'}
+            onPress={() => void submitFilter({ search: filter.search ? null : 'native' })}
+          />
+          <Action
+            label="Open product native-42"
+            onPress={() => void navigate.to(ProductModifyRoute, { params: { uuid: 'native-42' } })}
+          />
+          <Action label="Open brands tab" onPress={() => void navigate.to(BrandsRoute)} />
+          <FeaturePlayground />
+        </View>
+      </Viewport.Slot>
+      <Viewport.Refreshable />
+    </Viewport>
   );
 };
 
