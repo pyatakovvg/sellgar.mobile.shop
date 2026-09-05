@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "@utils/generate",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.ts",
+  "dependencies": {
+    "react-native-sha256": "1.4.10",
+    "uuid": "14.0.2"
+  }
+}

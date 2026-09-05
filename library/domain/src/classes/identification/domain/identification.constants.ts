@@ -1,0 +1,4 @@
+export const IDENTIFICATION_OCCUPATION_EMPLOYED = 'employed';
+export const IDENTIFICATION_OCCUPATION_UNEMPLOYED = 'unemployed';
+export const IDENTIFICATION_OCCUPATION_BUSINESS_OWNER = 'businessOwner';
+export const IDENTIFICATION_CITIZENSHIP_KZ = 'kz';

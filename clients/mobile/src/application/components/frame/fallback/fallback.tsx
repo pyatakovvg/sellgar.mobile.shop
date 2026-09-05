@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#11131a',
     gap: 16,
-    padding: 20,
+    padding: 40,
     justifyContent: 'center',
   },
   statusText: { color: '#f5f6fb', fontSize: 18, fontWeight: '600' },

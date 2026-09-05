@@ -3,6 +3,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "update": "yarn upgrade-interactive",
+    "audit": "yarn npm audit -A -R --environment production --severity moderate",
     "start": "yarn workspace @client/mobile start",
     "android": "yarn workspace @client/mobile android",
     "typecheck": "yarn workspace @client/mobile typecheck",
@@ -17,11 +19,16 @@
   "workspaces": {
     "packages": [
       "clients/*",
-      "library/*"
+      "utils/**/*",
+      "library/**/*",
+      "modules/**/*"
     ]
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "yarn@4.18.0"
+  "packageManager": "yarn@4.18.0",
+  "resolutions": {
+    "react-native-sha256@1.4.10": "patch:react-native-sha256@npm%3A1.4.10#./.yarn/patches/react-native-sha256-npm-1.4.10.patch"
+  }
 }

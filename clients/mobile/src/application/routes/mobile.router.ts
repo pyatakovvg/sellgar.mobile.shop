@@ -26,7 +26,7 @@ const createAnonymousBranch = (): Route => {
       new Route({
         address: segments('sign-in'),
         token: SignInRoute,
-        load: () => import('../../pages/sign-in/src'),
+        load: () => import('@module/sign-in'),
       }),
     ],
   });

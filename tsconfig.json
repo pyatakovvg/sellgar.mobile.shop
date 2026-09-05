@@ -30,10 +30,9 @@
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
     "inlineSources": false,
-    "downlevelIteration": false,
     "sourceMap": false,
     "preserveConstEnums": true,
     "composite": false
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }
