@@ -14,7 +14,7 @@ import { BaseLayout } from '../layouts/base';
 import { Status } from './components/status';
 import { Fallback } from './components/frame/fallback';
 import { MobileBindings } from './bindings';
-import { ResolveSessionInitializer } from './initializers';
+import { ApplicationLifecycleInitializer, ResolveSessionInitializer } from './initializers';
 import { createMobileRouter } from './routes';
 import { NavigationBlocker } from './presentations/navigation-blocker';
 import { DestructiveNotification, InfoNotification, SuccessNotification } from './presentations/notification';
@@ -52,7 +52,7 @@ export class MobileApplication extends Application {
       }),
     ]);
     app.layouts([BaseLayout]);
-    app.initializers([ResolveSessionInitializer]);
+    app.initializers([ResolveSessionInitializer, ApplicationLifecycleInitializer]);
     app.routing({
       exception: <Status title="Nested route failed" tone="error" />,
       fallback: <Fallback />,

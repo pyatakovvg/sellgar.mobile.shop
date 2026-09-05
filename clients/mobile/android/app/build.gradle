@@ -141,3 +141,18 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+// Reanimated publishes the Prefab package consumed by the application's CMake
+// configuration. Gradle does not currently infer that ordering after `clean`,
+// so a fresh build can configure the app before the package exists.
+// Keep the dependency in the host build graph instead of requiring a manual
+// two-step build on every developer machine and in CI.
+tasks.configureEach { task ->
+    if (task.name.startsWith("configureCMakeDebug")) {
+        task.dependsOn(":react-native-reanimated:prefabDebugPackage")
+    }
+
+    if (task.name.startsWith("configureCMakeRelWithDebInfo")) {
+        task.dependsOn(":react-native-reanimated:prefabReleasePackage")
+    }
+}

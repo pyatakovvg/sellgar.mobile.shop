@@ -56,12 +56,15 @@ layouts, routing и root Router теми же методами, что web rende
 
 ## Запуск
 
-Из корня `frontend/sellgar.ui.admin`:
+Из корня `frontend/sellgar.mobile.shop`:
 
 ```bash
 yarn dev:mobile
 yarn android:mobile
 ```
+
+Android host сам выстраивает native Prefab-зависимости Reanimated/Worklets,
+поэтому после `yarn` отдельный предварительный запуск Gradle-задач не требуется.
 
 Для ручной установки уже собранного debug APK нужен проброс Metro-порта:
 
