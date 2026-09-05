@@ -23,6 +23,7 @@ react {
     reactNativeDir = new File(workspaceNodeModulesDir, "react-native")
     codegenDir = new File(workspaceNodeModulesDir, "@react-native/codegen")
     cliFile = new File(workspaceNodeModulesDir, "react-native/cli.js")
+    hermesCommand = new File(workspaceNodeModulesDir, "hermes-compiler/hermesc/%OS-BIN%/hermesc").path
 
     /* Folders */
     //   The root of your project, i.e. where "package.json" lives. Default is '../..'
