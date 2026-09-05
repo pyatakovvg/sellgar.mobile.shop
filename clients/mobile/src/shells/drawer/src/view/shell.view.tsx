@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { type ShellContextInterface, useSafeAreaInsets, Viewport } from '@sellgar/app/native';
+import { type ShellContextInterface, useSafeAreaInsets } from '@sellgar/app/native';
 
 export const ShellView: React.FC<ShellContextInterface> = (props) => {
   const { top } = useSafeAreaInsets();
@@ -11,9 +11,7 @@ export const ShellView: React.FC<ShellContextInterface> = (props) => {
       <View style={styles.header}>
         <View style={styles.grabber} />
       </View>
-      <Viewport>
-        <Viewport.Slot>{props.children}</Viewport.Slot>
-      </Viewport>
+      {props.children}
     </View>
   );
 };
