@@ -784,10 +784,16 @@ __metadata:
     "@library/domain": "npm:0.0.1"
     "@library/kit": "npm:0.0.1"
     "@library/route-tokens": "npm:0.0.1"
+    "@module/auth-blocked": "npm:0.0.1"
     "@module/auth-otp": "npm:0.0.1"
     "@module/check-phone": "npm:0.0.1"
     "@module/password-reset-otp": "npm:0.0.1"
+    "@module/password-set": "npm:0.0.1"
+    "@module/reidentification": "npm:0.0.1"
+    "@module/reidentification-confirm": "npm:0.0.1"
+    "@module/set-sign-in-code": "npm:0.0.1"
     "@module/sign-in": "npm:0.0.1"
+    "@module/sign-in-by-code": "npm:0.0.1"
     "@react-native-async-storage/async-storage": "npm:3.1.1"
     "@react-native-community/cli": "npm:20.2.0"
     "@react-native-community/cli-platform-android": "npm:20.2.0"
@@ -820,6 +826,7 @@ __metadata:
     react-native-safe-area-context: "npm:5.9.1"
     react-native-sha256: "npm:1.4.10"
     react-native-svg: "npm:15.15.5"
+    react-native-webview: "npm:16.0.0"
     react-native-worklets: "npm:0.12.1"
     reflect-metadata: "npm:0.2.2"
     typescript: "npm:7.0.2"
@@ -1786,6 +1793,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@module/auth-blocked@npm:0.0.1, @module/auth-blocked@workspace:modules/auth-blocked":
+  version: 0.0.0-use.local
+  resolution: "@module/auth-blocked@workspace:modules/auth-blocked"
+  dependencies:
+    "@library/kit": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    class-transformer: "npm:0.5.1"
+    class-validator: "npm:0.15.1"
+    react: "npm:19.2.8"
+    react-native: "npm:0.87.1"
+  languageName: unknown
+  linkType: soft
+
 "@module/auth-otp@npm:0.0.1, @module/auth-otp@workspace:modules/auth-otp":
   version: 0.0.0-use.local
   resolution: "@module/auth-otp@workspace:modules/auth-otp"
@@ -1834,6 +1855,84 @@ __metadata:
     "@widget/otp": "npm:0.0.1"
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.15.1"
+    react: "npm:19.2.8"
+    react-native: "npm:0.87.1"
+  languageName: unknown
+  linkType: soft
+
+"@module/password-set@npm:0.0.1, @module/password-set@workspace:modules/password-set":
+  version: 0.0.0-use.local
+  resolution: "@module/password-set@workspace:modules/password-set"
+  dependencies:
+    "@hookform/resolvers": "npm:5.9.1"
+    "@library/design": "npm:0.0.1"
+    "@library/domain": "npm:0.0.1"
+    "@library/kit": "npm:0.0.1"
+    "@library/route-tokens": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    class-transformer: "npm:0.5.1"
+    class-validator: "npm:0.15.1"
+    react: "npm:19.2.8"
+    react-hook-form: "npm:7.87.0"
+    react-native: "npm:0.87.1"
+    yup: "npm:1.7.1"
+  languageName: unknown
+  linkType: soft
+
+"@module/reidentification-confirm@npm:0.0.1, @module/reidentification-confirm@workspace:modules/reidentification-confirm":
+  version: 0.0.0-use.local
+  resolution: "@module/reidentification-confirm@workspace:modules/reidentification-confirm"
+  dependencies:
+    "@library/design": "npm:0.0.1"
+    "@library/domain": "npm:0.0.1"
+    "@library/kit": "npm:0.0.1"
+    "@library/route-tokens": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    react: "npm:19.2.8"
+    react-native: "npm:0.87.1"
+  languageName: unknown
+  linkType: soft
+
+"@module/reidentification@npm:0.0.1, @module/reidentification@workspace:modules/reidentification":
+  version: 0.0.0-use.local
+  resolution: "@module/reidentification@workspace:modules/reidentification"
+  dependencies:
+    "@library/domain": "npm:0.0.1"
+    "@library/route-tokens": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    react: "npm:19.2.8"
+    react-native: "npm:0.87.1"
+    react-native-webview: "npm:16.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@module/set-sign-in-code@npm:0.0.1, @module/set-sign-in-code@workspace:modules/set-sign-in-code":
+  version: 0.0.0-use.local
+  resolution: "@module/set-sign-in-code@workspace:modules/set-sign-in-code"
+  dependencies:
+    "@library/design": "npm:0.0.1"
+    "@library/domain": "npm:0.0.1"
+    "@library/kit": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    react: "npm:19.2.8"
+    react-native: "npm:0.87.1"
+  languageName: unknown
+  linkType: soft
+
+"@module/sign-in-by-code@npm:0.0.1, @module/sign-in-by-code@workspace:modules/sign-in-by-code":
+  version: 0.0.0-use.local
+  resolution: "@module/sign-in-by-code@workspace:modules/sign-in-by-code"
+  dependencies:
+    "@library/design": "npm:0.0.1"
+    "@library/domain": "npm:0.0.1"
+    "@library/kit": "npm:0.0.1"
+    "@library/route-tokens": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
     react: "npm:19.2.8"
     react-native: "npm:0.87.1"
   languageName: unknown
@@ -4360,7 +4459,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invariant@npm:^2.2.4":
+"invariant@npm:2.2.4, invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -5924,6 +6023,19 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10/d5ffbb55506a668cc93d34363720aa054e7dba415fc81b5f76d1fb21191d6e8b279a2eabf0238af4323c99c3c7699a4c493bc587c2d1d20ec0aa6c141070ba6b
+  languageName: node
+  linkType: hard
+
+"react-native-webview@npm:16.0.0":
+  version: 16.0.0
+  resolution: "react-native-webview@npm:16.0.0"
+  dependencies:
+    escape-string-regexp: "npm:^4.0.0"
+    invariant: "npm:2.2.4"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10/a107aa986f479085109820f112e97dc9f77ca15de7b22fd13ecd2910284072b32369548c0a2865a04cce43c4f62b62849b51919bc23e62a21247d40669a64874
   languageName: node
   linkType: hard
 

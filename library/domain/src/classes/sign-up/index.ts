@@ -7,3 +7,4 @@ export * from './domain/request-sign-up.entity.ts';
 export * from './domain/sign-up-confirmation-result.type.ts';
 export * from './domain/sign-up-creation-request-status.type.ts';
 export * from './application/sign-up-service.interface.ts';
+export * from './application/error/sign-up-polling-attempts-exceeded.error.ts';

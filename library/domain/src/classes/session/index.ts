@@ -5,4 +5,6 @@ export * from './application/clear-auth-user-data-usecase.interface.ts';
 export * from './application/session-create-usecase.interface.ts';
 export * from './application/session-logout-usecase.interface.ts';
 export * from './application/session-restore-usecase.interface.ts';
+export * from './application/session-unlock-usecase.interface.ts';
 export * from './application/session-service.interface.ts';
+export * from './application/error/session-access-code-invalid.error.ts';

@@ -1,5 +1,6 @@
 import {
   AuthOtpRoute,
+  AuthBlockedRoute,
   BrandCreateRoute,
   BrandRoute,
   BrandsRoute,
@@ -8,14 +9,21 @@ import {
   ProductsRoute,
   PasswordResetOtpRoute,
   PasswordSetRoute,
+  ReidentificationConfirmRoute,
+  ReidentificationRoute,
   SetSignInCodeRoute,
+  SignInByCodeRoute,
   SignInRoute,
 } from '@library/route-tokens';
 import { param, segments } from '@sellgar/app';
 import { Route, Router, ScreenAnimation } from '@sellgar/app/native';
 
 import { MainTabsLayout } from '../../layouts/main-tabs/src';
-import { RequireAnonymousSessionPolicy, RequireAuthenticatedSessionPolicy } from '../policies';
+import {
+  RequireAnonymousSessionPolicy,
+  RequireAuthenticatedSessionPolicy,
+  RequireStoredSessionPolicy,
+} from '../policies';
 
 export const createMobileRouter = (): Router => {
   return new Router({
@@ -26,8 +34,16 @@ export const createMobileRouter = (): Router => {
 const createAnonymousBranch = (): Route => {
   return new Route({
     canMatch: [RequireAnonymousSessionPolicy.configure().onFail(Router.redirectToSaved({ replace: true }))],
-    defaultTo: CheckPhoneRoute,
+    defaultTo: Router.firstAvailable(),
     routes: [
+      new Route({
+        address: segments('sign-in-by-code'),
+        canMatch: [
+          RequireStoredSessionPolicy.configure().onFail(Router.redirectTo(CheckPhoneRoute, { replace: true })),
+        ],
+        token: SignInByCodeRoute,
+        load: () => import('@module/sign-in-by-code'),
+      }),
       new Route({
         address: segments('check-phone'),
         token: CheckPhoneRoute,
@@ -58,6 +74,21 @@ const createAnonymousBranch = (): Route => {
         token: SetSignInCodeRoute,
         load: () => import('@module/set-sign-in-code'),
       }),
+      new Route({
+        address: segments('reidentification-confirm'),
+        token: ReidentificationConfirmRoute,
+        load: () => import('@module/reidentification-confirm'),
+      }),
+      new Route({
+        address: segments('reidentification'),
+        token: ReidentificationRoute,
+        load: () => import('@module/reidentification'),
+      }),
+      new Route({
+        address: segments('auth-blocked'),
+        token: AuthBlockedRoute,
+        load: () => import('@module/auth-blocked'),
+      }),
     ],
   });
 };
@@ -66,7 +97,7 @@ const createAuthenticatedBranch = (): Route => {
   return new Route({
     canMatch: [
       RequireAuthenticatedSessionPolicy.configure().onFail(
-        Router.redirectTo(SignInRoute, {
+        Router.redirectTo(SignInByCodeRoute, {
           replace: true,
           saveCurrentLocation: true,
         }),

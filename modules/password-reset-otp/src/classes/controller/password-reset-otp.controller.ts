@@ -1,5 +1,9 @@
-import { PasswordServiceInterface, type StatusPasswordResetResultEntity } from '@library/domain';
-import { PasswordSetRoute } from '@library/route-tokens';
+import {
+  getAuthAccessRestriction,
+  PasswordServiceInterface,
+  type StatusPasswordResetResultEntity,
+} from '@library/domain';
+import { AuthBlockedRoute, PasswordSetRoute } from '@library/route-tokens';
 import {
   Controller,
   Exception,
@@ -53,6 +57,17 @@ export class PasswordResetOtpController extends PasswordResetOtpControllerInterf
     try {
       result = await this.passwordService.waitResetFinalStatus(params.requestUuid);
     } catch (error) {
+      const restriction = getAuthAccessRestriction(error);
+
+      if (restriction) {
+        await this.navigate.to(AuthBlockedRoute, {
+          state: {
+            title: restriction === 'temporary' ? 'Доступ к аккаунту временно ограничен' : 'Доступ к аккаунту ограничен',
+          },
+        });
+        return;
+      }
+
       await this.userRequest.alert({
         description: 'Попробуйте повторить операцию позже',
         title: 'Что-то пошло не так',
@@ -67,6 +82,7 @@ export class PasswordResetOtpController extends PasswordResetOtpControllerInterf
     }
 
     await this.navigate.to(PasswordSetRoute, {
+      replace: true,
       state: {
         passwordResetToken,
         phone: state.phone,

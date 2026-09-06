@@ -8,11 +8,11 @@ import type { PasswordResetInput } from '../data/gateway/input/password-reset.in
 import type { AuthStartInput } from '../data/gateway/input/auth-start.input.ts';
 
 export abstract class AuthServiceInterface {
+  abstract getAccessToken(): string;
   abstract restore(dto: SessionRestoreInput): Promise<AuthEntity>;
   abstract refresh(refreshToken: string): Promise<AuthEntity>;
   abstract signInByCredentials(phone: string, password: string): Promise<LoginWithIdentificationEntity>;
   abstract waitReidentificationFinalStatus(requestUuid: string, count?: number): Promise<ReidentificationStatusEntity>;
   abstract passwordReset(dto: PasswordResetInput): Promise<AuthEntity>;
   abstract startAuth(dto: AuthStartInput): Promise<AuthStartEntity>;
-  abstract clearCredentials(): void;
 }

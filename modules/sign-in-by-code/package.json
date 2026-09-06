@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "type": "module",
+  "name": "@module/sign-in-by-code",
+  "version": "0.0.1",
+  "description": "Unlocks a stored application session with a local access code or biometry",
+  "license": "UNLICENSED",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@library/design": "0.0.1",
+    "@library/domain": "0.0.1",
+    "@library/kit": "0.0.1",
+    "@library/route-tokens": "0.0.1",
+    "@sellgar/app": "0.0.1",
+    "react": "19.2.8",
+    "react-native": "0.87.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18"
+  }
+}

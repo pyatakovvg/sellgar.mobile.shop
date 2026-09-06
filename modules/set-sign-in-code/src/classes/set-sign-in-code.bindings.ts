@@ -9,7 +9,7 @@ import { AccessCodeStore } from './store/access-code.store.ts';
 
 export class SetSignInCodeBindings implements BindingModuleInterface {
   register(registry: BindingRegistryInterface): void {
-    registry.bind(AccessCodeStoreInterface).to(AccessCodeStore);
+    registry.bind(AccessCodeStoreInterface).to(AccessCodeStore).inSingletonScope();
     registry.bind(SetAccessCodeControllerInterface).to(SetAccessCodeController);
     registry.bind(ConfirmAccessCodeControllerInterface).to(ConfirmAccessCodeController);
   }

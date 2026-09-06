@@ -1,17 +1,27 @@
+import { ClearAuthUserDataUsecaseInterface, SessionLogoutUsecaseInterface } from '@library/domain';
 import { Controller, Inject, SessionRuntimeStateInterface } from '@sellgar/app';
 
-import { delay } from '../../../../../shared/runtime/delay';
 import { SignOutControllerInterface } from './sign-out-controller.interface.ts';
 
 @Controller()
 export class SignOutController implements SignOutControllerInterface {
   constructor(
+    @Inject(ClearAuthUserDataUsecaseInterface)
+    private readonly clearAuthUserData: ClearAuthUserDataUsecaseInterface,
+    @Inject(SessionLogoutUsecaseInterface)
+    private readonly logout: SessionLogoutUsecaseInterface,
     @Inject(SessionRuntimeStateInterface)
     private readonly session: SessionRuntimeStateInterface,
   ) {}
 
   async action({ signal }: Parameters<SignOutControllerInterface['action']>[0]): Promise<void> {
-    await delay(300, signal);
-    this.session.setAnonymous();
+    try {
+      await this.logout.execute();
+    } finally {
+      if (!signal.aborted) {
+        this.clearAuthUserData.execute();
+        this.session.setAnonymous();
+      }
+    }
   }
 }

@@ -28,7 +28,7 @@ export class ApplicationLifecycleInitializer implements ApplicationInitializerIn
       backgroundStartedAt = null;
 
       if (backgroundDuration >= MAX_BACKGROUND_DURATION_MS && context.session.phase === 'authenticated') {
-        context.session.setAnonymous();
+        context.session.expire();
       }
     };
 

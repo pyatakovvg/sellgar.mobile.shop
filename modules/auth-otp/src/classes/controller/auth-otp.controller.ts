@@ -1,5 +1,9 @@
-import { SignUpServiceInterface, type CreationRequestSignUpResultEntity } from '@library/domain';
-import { PasswordSetRoute } from '@library/route-tokens';
+import {
+  getAuthAccessRestriction,
+  SignUpServiceInterface,
+  type CreationRequestSignUpResultEntity,
+} from '@library/domain';
+import { AuthBlockedRoute, PasswordSetRoute } from '@library/route-tokens';
 import {
   Controller,
   Exception,
@@ -52,6 +56,17 @@ export class AuthOtpController extends AuthOtpControllerInterface {
     try {
       result = await this.signUpService.checkCreationRequest(state.requestUuid);
     } catch (error) {
+      const restriction = getAuthAccessRestriction(error);
+
+      if (restriction) {
+        await this.navigate.to(AuthBlockedRoute, {
+          state: {
+            title: restriction === 'temporary' ? 'Доступ к аккаунту временно ограничен' : 'Доступ к аккаунту ограничен',
+          },
+        });
+        return;
+      }
+
       await this.userRequest.alert({
         description: 'Попробуйте повторить операцию позже',
         title: 'Что-то пошло не так',
@@ -64,6 +79,7 @@ export class AuthOtpController extends AuthOtpControllerInterface {
     }
 
     await this.navigate.to(PasswordSetRoute, {
+      replace: true,
       state: {
         passwordResetToken: result.data.passwordResetToken,
         phone: state.phone,

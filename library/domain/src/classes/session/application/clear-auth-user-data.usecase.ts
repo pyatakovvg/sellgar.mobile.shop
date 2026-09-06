@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@sellgar/app';
 
-import { AuthServiceInterface } from '../../auth';
+import { AuthStorageInterface } from '../../auth';
 import { DeviceInfoServiceInterface } from '../../../infrastructure/device-info';
 import { SessionStorageInterface } from '../data/storage/session-storage.interface.ts';
 
@@ -9,7 +9,8 @@ import { ClearAuthUserDataUsecaseInterface } from './clear-auth-user-data-usecas
 @Injectable()
 export class ClearAuthUserDataUsecase implements ClearAuthUserDataUsecaseInterface {
   constructor(
-    @Inject(AuthServiceInterface) private readonly authService: AuthServiceInterface,
+    @Inject(AuthStorageInterface)
+    private readonly authStorage: AuthStorageInterface,
     @Inject(SessionStorageInterface) private readonly sessionStorage: SessionStorageInterface,
     @Inject(DeviceInfoServiceInterface)
     private readonly deviceInfoService: DeviceInfoServiceInterface,
@@ -17,7 +18,7 @@ export class ClearAuthUserDataUsecase implements ClearAuthUserDataUsecaseInterfa
 
   execute() {
     this.sessionStorage.clear();
-    this.authService.clearCredentials();
+    this.authStorage.clear();
     this.deviceInfoService.clearClientDeviceSalt();
   }
 }

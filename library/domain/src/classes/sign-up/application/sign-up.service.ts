@@ -9,12 +9,11 @@ import { RequestSignUpResultEntity } from '../domain/request-sign-up-result.enti
 import { CreationRequestSignUpResultEntity } from '../domain/creation-request-sign-up-result.entity.ts';
 
 import { SignUpServiceInterface } from './sign-up-service.interface.ts';
+import { SignUpPollingAttemptsExceededError } from './error/sign-up-polling-attempts-exceeded.error.ts';
 import { OtpAttemptsExceededError, OtpInvalidCodeError } from '../../otp';
 
 @Injectable()
 export class SignUpService implements SignUpServiceInterface {
-  private _count = 10;
-
   constructor(@Inject(SignUpGatewayInterface) private readonly signUpGateway: SignUpGatewayInterface) {}
 
   async signUp(phone: string, code: string, token: string, requestUuid: string): Promise<ConfirmSignUpResultEntity> {
@@ -57,22 +56,23 @@ export class SignUpService implements SignUpServiceInterface {
   }
 
   async checkCreationRequest(requestUuid: string): Promise<CreationRequestSignUpResultEntity> {
-    const result = await this.signUpGateway.checkCreationRequest(requestUuid);
-    const instanceResult = plainToInstance(CreationRequestSignUpResultEntity, result);
+    const attempts = 10;
 
-    await validateOrReject(instanceResult);
+    for (let attempt = 0; attempt < attempts; attempt++) {
+      const result = await this.signUpGateway.checkCreationRequest(requestUuid);
+      const instanceResult = plainToInstance(CreationRequestSignUpResultEntity, result);
 
-    if (instanceResult.data.status === 'processing') {
-      this._count--;
+      await validateOrReject(instanceResult);
 
-      if (this._count < 0) {
-        this._count = 10;
-        throw Error();
+      if (instanceResult.data.status !== 'processing') {
+        return instanceResult;
       }
-      await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
-      return await this.checkCreationRequest(requestUuid);
+
+      if (attempt < attempts - 1) {
+        await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+      }
     }
 
-    return instanceResult;
+    throw new SignUpPollingAttemptsExceededError();
   }
 }

@@ -5,7 +5,9 @@ export { CheckPhoneRoute } from './screen/check-phone.route-token.ts';
 export { PasswordSetRoute } from './screen/password-set.route-token.ts';
 export { PasswordResetOtpRoute } from './screen/password-reset-otp.route-token.ts';
 export { ReidentificationRoute } from './screen/reidentification.route-token.ts';
+export { ReidentificationConfirmRoute } from './screen/reidentification-confirm.route-token.ts';
 export { SetSignInCodeRoute } from './screen/set-sign-in-code.route-token.ts';
+export { SignInByCodeRoute } from './screen/sign-in-by-code.route-token.ts';
 export { SignInRoute } from './screen/sign-in.route-token.ts';
 
 export { ShopsRoute } from './screen/shops.route-token.ts';

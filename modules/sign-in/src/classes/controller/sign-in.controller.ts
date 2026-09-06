@@ -1,6 +1,6 @@
-import { AuthServiceInterface } from '@library/domain';
+import { AuthServiceInterface, getAuthAccessRestriction, ReidentificationFlowServiceInterface } from '@library/domain';
 import type { LoginPendingIdentificationEntity, LoginWithIdentificationEntity } from '@library/domain';
-import { AuthBlockedRoute, ReidentificationRoute, SetSignInCodeRoute } from '@library/route-tokens';
+import { AuthBlockedRoute, ReidentificationConfirmRoute, SetSignInCodeRoute } from '@library/route-tokens';
 import {
   BadRequestException,
   Controller,
@@ -9,11 +9,12 @@ import {
   NavigateServiceInterface,
   UserRequestServiceInterface,
 } from '@sellgar/app';
+import { uuid } from '@utils/generate';
 import { plainToInstance } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
 
 import { InvalidCredentialsError } from '../error/invalid-credentials.error.ts';
-import { SignInControllerInterface } from './sign-in-controller.interface.ts';
+import { SignInControllerInterface, type SignInLoaderData } from './sign-in-controller.interface.ts';
 import { SignInRouteStateEntity } from './domain/sign-in-route-state.entity.ts';
 
 @Controller()
@@ -25,14 +26,21 @@ export class SignInController extends SignInControllerInterface {
     private readonly location: LocationServiceInterface,
     @Inject(NavigateServiceInterface)
     private readonly navigate: NavigateServiceInterface,
+    @Inject(ReidentificationFlowServiceInterface)
+    private readonly reidentification: ReidentificationFlowServiceInterface,
     @Inject(UserRequestServiceInterface)
     private readonly userRequest: UserRequestServiceInterface,
   ) {
     super();
   }
 
-  async loader(): Promise<SignInRouteStateEntity> {
-    return this.readRouteState();
+  async loader(): Promise<SignInLoaderData> {
+    const state = await this.readRouteState();
+
+    return {
+      passwordResetRequestUuid: uuid(),
+      phone: state.phone,
+    };
   }
 
   async action({ payload }: Parameters<SignInControllerInterface['action']>[0]): Promise<void> {
@@ -46,42 +54,48 @@ export class SignInController extends SignInControllerInterface {
     }
 
     if (isPendingIdentification(result)) {
-      await this.navigate.to(ReidentificationRoute, {
+      this.reidentification.begin({
+        identification: result.data,
+        password: payload.password,
+        phone: state.phone,
+      });
+
+      try {
+        await this.navigate.to(ReidentificationConfirmRoute);
+      } catch (error) {
+        this.reidentification.clear();
+        throw error;
+      }
+
+      return;
+    }
+
+    await this.navigate.to(SetSignInCodeRoute, {
+      replace: true,
+      state: { phone: state.phone },
+    });
+  }
+
+  private async handleError(error: unknown): Promise<void> {
+    const restriction = getAuthAccessRestriction(error);
+
+    if (restriction) {
+      await this.navigate.to(AuthBlockedRoute, {
         state: {
-          expiresAt: result.data.expiresAt,
-          identificationLink: result.data.identificationLink,
-          requestUuid: result.data.requestUuid,
+          title: restriction === 'temporary' ? 'Доступ к аккаунту временно ограничен' : 'Доступ к аккаунту ограничен',
         },
       });
       return;
     }
 
-    await this.navigate.to(SetSignInCodeRoute, { state: { phone: state.phone } });
-  }
-
-  private async handleError(error: unknown): Promise<never> {
     const code = getErrorCode(error);
-
-    if (code === '206' || code === '216') {
-      await this.navigate.to(AuthBlockedRoute, {
-        state: { title: 'Доступ к аккаунту ограничен' },
-      });
-      throw error;
-    }
-
-    if (code === '207') {
-      await this.navigate.to(AuthBlockedRoute, {
-        state: { title: 'Доступ к аккаунту временно ограничен' },
-      });
-      throw error;
-    }
 
     if (code === '210') {
       await this.userRequest.alert({
         description: 'Попробуйте повторить операцию позже',
         title: 'Слишком много попыток',
       });
-      throw error;
+      return;
     }
 
     if (error instanceof BadRequestException) {

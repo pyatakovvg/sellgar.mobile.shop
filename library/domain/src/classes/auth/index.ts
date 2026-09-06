@@ -10,4 +10,8 @@ export * from './domain/pending-identification.entity.ts';
 export * from './domain/reidentification-status-result.entity.ts';
 export * from './domain/reidentification-status.entity.ts';
 export * from './application/auth-service.interface.ts';
+export * from './application/auth-access-restriction.ts';
+export * from './data/storage/auth-storage.interface.ts';
 export * from './application/error/auth-polling-attempts-exceeded.error.ts';
+export * from './application/error/reidentification-completion.error.ts';
+export * from './application/reidentification-flow-service.interface.ts';

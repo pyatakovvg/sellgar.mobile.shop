@@ -49,7 +49,7 @@ export class PasswordSetController extends PasswordSetControllerInterface {
       throw error;
     }
 
-    await this.navigate.to(SetSignInCodeRoute);
+    await this.navigate.to(SetSignInCodeRoute, { replace: true });
   }
 
   private async readRouteState(): Promise<PasswordSetRouteStateEntity> {

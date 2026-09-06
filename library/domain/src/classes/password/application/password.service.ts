@@ -48,8 +48,7 @@ export class PasswordService implements PasswordServiceInterface {
   }
 
   async waitResetFinalStatus(requestUuid: string, count: number = 10) {
-    let retries = 0;
-    while (retries <= count) {
+    for (let attempt = 0; attempt < count; attempt++) {
       const result = await this.passwordGateway.checkStatus(requestUuid);
 
       if (result.data && result.data.status === 'succeeded') {
@@ -58,11 +57,12 @@ export class PasswordService implements PasswordServiceInterface {
 
         return instanceResult;
       }
-      retries++;
-      if (retries < count) {
+
+      if (attempt < count - 1) {
         await new Promise<void>((resolve) => setTimeout(resolve, 1000));
       }
     }
+
     throw new PasswordPollingAttemptsExceededError();
   }
 }

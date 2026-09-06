@@ -1,18 +1,17 @@
 import { AuthHeader } from '@library/design';
+import { PasswordResetOtpRoute } from '@library/route-tokens';
 import { scales, Typography, type TTheme, useTheme } from '@library/kit';
-import { Viewport, useLoaderData, useSubmit } from '@sellgar/app/native';
+import { NavLink, Viewport, useLoaderData } from '@sellgar/app/native';
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { PasswordResetControllerInterface } from '../classes/controller/password-reset/password-reset-controller.interface.ts';
 import { SignInControllerInterface } from '../classes/controller/sign-in-controller.interface.ts';
 import { SignInForm } from './form/sign-in.form.tsx';
 
 export const SignInView: React.FC = () => {
   const { theme } = useTheme();
   const data = useLoaderData(SignInControllerInterface);
-  const resetPassword = useSubmit(PasswordResetControllerInterface);
   const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   return (
@@ -24,11 +23,22 @@ export const SignInView: React.FC = () => {
             icon="lock"
             title="Введите пароль"
           />
-          <Typography size="caption-m" weight="regular">
-            <Text disabled={resetPassword.inProcess} onPress={() => void resetPassword()} style={styles.forgotPassword}>
-              Я забыл пароль
-            </Text>
-          </Typography>
+          <NavLink
+            navigation={(navigate) =>
+              navigate.to(PasswordResetOtpRoute, {
+                params: { requestUuid: data.passwordResetRequestUuid },
+                state: { phone: data.phone },
+              })
+            }
+          >
+            {({ isPending, link }) => (
+              <TouchableOpacity {...link} disabled={isPending} style={styles.forgotPassword}>
+                <Typography size="caption-m" weight="regular">
+                  <Text style={styles.forgotPasswordText}>Я забыл пароль</Text>
+                </Typography>
+              </TouchableOpacity>
+            )}
+          </NavLink>
           <View style={styles.content}>
             <SignInForm phone={data.phone} />
           </View>
@@ -44,8 +54,11 @@ const createStyles = (theme: TTheme) =>
       marginTop: scales[96],
     },
     forgotPassword: {
-      color: theme.colors.text.accent.blue_accent,
+      alignSelf: 'flex-start',
       marginTop: scales[10],
+    },
+    forgotPasswordText: {
+      color: theme.colors.text.accent.blue_accent,
     },
     wrapper: {
       flex: 1,

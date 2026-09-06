@@ -12,6 +12,8 @@ import { ClearAuthUserDataUsecaseInterface } from './application/clear-auth-user
 import { ClearAuthUserDataUsecase } from './application/clear-auth-user-data.usecase.ts';
 import { SessionRestoreUsecaseInterface } from './application/session-restore-usecase.interface.ts';
 import { SessionRestoreUsecase } from './application/session-restore.usecase.ts';
+import { SessionUnlockUsecaseInterface } from './application/session-unlock-usecase.interface.ts';
+import { SessionUnlockUsecase } from './application/session-unlock.usecase.ts';
 import { SessionStorageInterface } from './data/storage/session-storage.interface.ts';
 import { SessionSecureStorage } from './data/storage/session-secure.storage.ts';
 
@@ -24,5 +26,6 @@ export class SessionBinding extends BindingModuleInterface {
     registry.bind(SessionLogoutUsecaseInterface).to(SessionLogoutUsecase);
     registry.bind(ClearAuthUserDataUsecaseInterface).to(ClearAuthUserDataUsecase);
     registry.bind(SessionRestoreUsecaseInterface).to(SessionRestoreUsecase);
+    registry.bind(SessionUnlockUsecaseInterface).to(SessionUnlockUsecase);
   }
 }

@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "type": "module",
+  "name": "@module/auth-blocked",
+  "version": "0.0.1",
+  "description": "Presents an authentication access restriction",
+  "license": "UNLICENSED",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@library/kit": "0.0.1",
+    "@sellgar/app": "0.0.1",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.15.1",
+    "react": "19.2.8",
+    "react-native": "0.87.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18"
+  }
+}

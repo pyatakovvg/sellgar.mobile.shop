@@ -21,6 +21,10 @@ export class AuthService implements AuthServiceInterface {
     @Inject(AuthStorageInterface) private readonly authStorage: AuthStorageInterface,
   ) {}
 
+  getAccessToken(): string {
+    return this.authStorage.getAccessToken();
+  }
+
   async signInByCredentials(phone: string, password: string): Promise<LoginWithIdentificationEntity> {
     const result = await this.authGateway.signInByCredentials(phone, password);
 
@@ -71,10 +75,6 @@ export class AuthService implements AuthServiceInterface {
   async startAuth(dto: AuthStartInput): Promise<AuthStartEntity> {
     const result = await this.authGateway.startAuth(dto);
     return result.data;
-  }
-
-  clearCredentials(): void {
-    this.authStorage.clear();
   }
 
   private saveCredentials(credentials: AuthEntity): void {

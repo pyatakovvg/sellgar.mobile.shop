@@ -1,5 +1,5 @@
-import { AuthServiceInterface, type AuthStartEntity } from '@library/domain';
-import { AuthOtpRoute, SignInRoute } from '@library/route-tokens';
+import { AuthServiceInterface, getAuthAccessRestriction, type AuthStartEntity } from '@library/domain';
+import { AuthBlockedRoute, AuthOtpRoute, SignInRoute } from '@library/route-tokens';
 import { Controller, Inject, NavigateServiceInterface, UserRequestServiceInterface } from '@sellgar/app';
 import { uuid } from '@utils/generate';
 
@@ -24,7 +24,18 @@ export class CheckPhoneController extends CheckPhoneControllerInterface {
 
     try {
       result = await this.authService.startAuth({ phone: payload.phone, requestUuid });
-    } catch {
+    } catch (error) {
+      const restriction = getAuthAccessRestriction(error);
+
+      if (restriction) {
+        await this.navigate.to(AuthBlockedRoute, {
+          state: {
+            title: restriction === 'temporary' ? 'Доступ к аккаунту временно ограничен' : 'Доступ к аккаунту ограничен',
+          },
+        });
+        return;
+      }
+
       await this.userRequest.alert({
         description: 'Попробуйте повторить операцию позже',
         title: 'Что-то пошло не так',
