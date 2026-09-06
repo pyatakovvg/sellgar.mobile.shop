@@ -8,4 +8,5 @@ module.exports = {
       packageName: hostConfig.android.namespace,
     },
   },
+  assets: ['./assets/fonts/'],
 };

@@ -1,4 +1,5 @@
 export { DashboardRoute } from './screen/dashboard.route-token.ts';
+export { CheckPhoneRoute } from './screen/check-phone.route-token.ts';
 export { SignInRoute } from './screen/sign-in.route-token.ts';
 
 export { ShopsRoute } from './screen/shops.route-token.ts';

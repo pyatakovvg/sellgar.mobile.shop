@@ -1,0 +1,30 @@
+
+.wrapper {
+
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  width: var(--numbers-272);
+}
+
+.content {
+
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  align-items: center;
+  padding: var(--numbers-32) var(--numbers-24);
+}
+
+.icon {
+
+  font-size: var(--numbers-36);
+  color: var(--icon-status-info);
+}
+
+.text {
+
+  text-align: center;
+  margin-top: var(--numbers-8);
+  color: var(--text-base-secondary);
+}

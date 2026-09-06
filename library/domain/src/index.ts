@@ -6,7 +6,7 @@ export {
   BiometryServiceInterface,
   type TBiometry,
 } from './infrastructure/biometry';
-export { ConfigInterface, type ConfigKey } from './infrastructure/config';
+export { ConfigInterface, configureConfig, type ConfigKey, type ConfigMap } from './infrastructure/config';
 export { DeviceInfoServiceInterface } from './infrastructure/device-info';
 export {
   ENotificationAvailableStatus,

@@ -2,6 +2,7 @@ import {
   BrandCreateRoute,
   BrandRoute,
   BrandsRoute,
+  CheckPhoneRoute,
   ProductModifyRoute,
   ProductsRoute,
   SignInRoute,
@@ -21,8 +22,13 @@ export const createMobileRouter = (): Router => {
 const createAnonymousBranch = (): Route => {
   return new Route({
     canMatch: [RequireAnonymousSessionPolicy.configure().onFail(Router.redirectToSaved({ replace: true }))],
-    defaultTo: SignInRoute,
+    defaultTo: CheckPhoneRoute,
     routes: [
+      new Route({
+        address: segments('check-phone'),
+        token: CheckPhoneRoute,
+        load: () => import('@module/check-phone'),
+      }),
       new Route({
         address: segments('sign-in'),
         token: SignInRoute,

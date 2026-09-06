@@ -1,5 +1,7 @@
 import { AppRegistry } from 'react-native';
 
+import './bootstrap/configure-runtime.ts';
+
 import { ThemeProvider } from '@library/kit';
 import { createNativeLinkingTransport, createNativeRouterBridge } from '@sellgar/app/native';
 

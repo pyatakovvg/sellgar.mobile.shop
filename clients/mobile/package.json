@@ -4,19 +4,21 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android -i",
+    "assets:link": "react-native-asset",
     "start": "react-native start --reset-cache",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@library/domain": "workspace:*",
-    "@library/kit": "workspace:*",
-    "@library/route-tokens": "workspace:*",
-    "@module/sign-in": "workspace:*",
+    "@library/domain": "0.0.1",
+    "@library/kit": "0.0.1",
+    "@library/route-tokens": "0.0.1",
+    "@module/check-phone": "0.0.1",
+    "@module/sign-in": "0.0.1",
     "@react-native-async-storage/async-storage": "3.1.1",
     "@react-native-firebase/app": "26.4.0",
     "@react-native-firebase/messaging": "26.4.0",
     "@sbaiahmed1/react-native-blur": "6.0.1",
-    "@sellgar/app": "workspace:*",
+    "@sellgar/app": "0.0.1",
     "mobx": "6.16.1",
     "mobx-react": "9.2.2",
     "react": "19.2.8",
@@ -26,6 +28,7 @@
     "react-native-gesture-handler": "3.2.1",
     "react-native-keyboard-controller": "1.22.4",
     "react-native-linear-gradient": "2.8.3",
+    "react-native-mask-text": "0.15.0",
     "react-native-mmkv": "4.3.2",
     "react-native-nitro-modules": "0.37.1",
     "react-native-reanimated": "4.6.0",
@@ -50,6 +53,8 @@
     "@types/react": "19.2.18",
     "@types/use-sync-external-store": "1.5.0",
     "babel-plugin-transform-typescript-metadata": "0.4.0",
+    "react-native-asset": "2.3.0",
+    "react-native-dotenv": "4.1.1",
     "typescript": "7.0.2"
   }
 }
