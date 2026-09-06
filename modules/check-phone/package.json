@@ -11,6 +11,7 @@
     "@library/design": "0.0.1",
     "@library/domain": "0.0.1",
     "@library/kit": "0.0.1",
+    "@library/route-tokens": "0.0.1",
     "@sellgar/app": "0.0.1",
     "@utils/generate": "0.0.1",
     "react": "19.2.8",

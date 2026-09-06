@@ -26,6 +26,7 @@
     "react-native-biometrics": "3.0.1",
     "react-native-device-info": "15.0.2",
     "react-native-gesture-handler": "3.2.1",
+    "react-native-get-random-values": "2.0.0",
     "react-native-keyboard-controller": "1.22.4",
     "react-native-linear-gradient": "2.8.3",
     "react-native-mask-text": "0.15.0",

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Caption, Field, Icon, Input, InputMask, Typography, useTheme } from '@library/kit';
-import { useSubmit, useUserRequest } from '@sellgar/app/native';
+import { useSubmit } from '@sellgar/app/native';
 
 import React from 'react';
 import { Linking, Text, View } from 'react-native';
@@ -21,22 +21,12 @@ export const CheckPhoneForm: React.FC = () => {
   const { theme } = useTheme();
   const styles = React.useMemo(() => createStyles(theme), [theme]);
   const submit = useSubmit(CheckPhoneControllerInterface);
-  const userRequest = useUserRequest();
   const methods = useForm<CheckPhoneFormValues>({
     defaultValues: { phone: '7' },
     resolver: yupResolver(checkPhoneSchema),
   });
 
-  const onSubmit = methods.handleSubmit(async (values) => {
-    try {
-      await submit(values);
-    } catch {
-      await userRequest.alert({
-        description: 'Попробуйте повторить операцию позже',
-        title: 'Что-то пошло не так',
-      });
-    }
-  });
+  const onSubmit = methods.handleSubmit(submit);
 
   return (
     <FormProvider {...methods}>
@@ -91,8 +81,8 @@ export const CheckPhoneForm: React.FC = () => {
                     }
                   >
                     оферту
-                  </Text>{' '}
-                  и{' '}
+                  </Text>
+                  <Text> и </Text>
                   <Text style={styles.link} onPress={() => void Linking.openURL('https://tiyn.io/privacy-policy')}>
                     политику конфиденциальности
                   </Text>
