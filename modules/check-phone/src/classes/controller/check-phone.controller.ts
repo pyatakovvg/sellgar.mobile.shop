@@ -19,33 +19,36 @@ export class CheckPhoneController extends CheckPhoneControllerInterface {
   }
 
   async action({ payload }: Parameters<CheckPhoneControllerInterface['action']>[0]): Promise<void> {
-    try {
-      const requestUuid = uuid();
-      const result = await this.authService.startAuth({ phone: payload.phone, requestUuid });
+    const requestUuid = uuid();
+    let result: AuthStartEntity;
 
-      await this.navigateToNextRoute(result, payload.phone, requestUuid);
+    try {
+      result = await this.authService.startAuth({ phone: payload.phone, requestUuid });
     } catch {
       await this.userRequest.alert({
         description: 'Попробуйте повторить операцию позже',
         title: 'Что-то пошло не так',
       });
+      return;
     }
+
+    await this.navigateToNextRoute(result, payload.phone, requestUuid);
   }
 
   private navigateToNextRoute(result: AuthStartEntity, phone: string, requestUuid: string): Promise<void> {
     switch (result.nextAction) {
       case 'waitCredentials':
         return this.navigate.to(SignInRoute, {
-          state: Object.freeze({ phone }),
+          state: { phone },
         });
 
       case 'waitOtp':
         return this.navigate.to(AuthOtpRoute, {
-          state: Object.freeze({
+          state: {
             phone,
             requestUuid,
             verification: result.verification,
-          }),
+          },
         });
     }
   }

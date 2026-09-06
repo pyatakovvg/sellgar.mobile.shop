@@ -1,10 +1,14 @@
 import {
+  AuthOtpRoute,
   BrandCreateRoute,
   BrandRoute,
   BrandsRoute,
   CheckPhoneRoute,
   ProductModifyRoute,
   ProductsRoute,
+  PasswordResetOtpRoute,
+  PasswordSetRoute,
+  SetSignInCodeRoute,
   SignInRoute,
 } from '@library/route-tokens';
 import { param, segments } from '@sellgar/app';
@@ -33,6 +37,26 @@ const createAnonymousBranch = (): Route => {
         address: segments('sign-in'),
         token: SignInRoute,
         load: () => import('@module/sign-in'),
+      }),
+      new Route({
+        address: segments('otp'),
+        token: AuthOtpRoute,
+        load: () => import('@module/auth-otp'),
+      }),
+      new Route({
+        address: segments('password-reset', 'otp', param('requestUuid')),
+        token: PasswordResetOtpRoute,
+        load: () => import('@module/password-reset-otp'),
+      }),
+      new Route({
+        address: segments('password-set'),
+        token: PasswordSetRoute,
+        load: () => import('@module/password-set'),
+      }),
+      new Route({
+        address: segments('set-sign-in-code'),
+        token: SetSignInCodeRoute,
+        load: () => import('@module/set-sign-in-code'),
       }),
     ],
   });

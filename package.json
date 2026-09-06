@@ -21,7 +21,8 @@
       "clients/*",
       "utils/**/*",
       "library/**/*",
-      "modules/**/*"
+      "modules/**/*",
+      "widgets/**/*"
     ]
   },
   "engines": {

@@ -1,65 +1,100 @@
-import { Input, Field, Label } from '@library/kit';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Caption, Field, Icon, Input, InputMask, useTheme } from '@library/kit';
+import { useSubmit } from '@sellgar/app/native';
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { FormProvider, useForm, Controller } from 'react-hook-form';
+import { View } from 'react-native';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 
-interface SignInFormValues {
-  login: string;
+import { SignInControllerInterface } from '../../classes/controller/sign-in-controller.interface.ts';
+import { InvalidCredentialsError } from '../../classes/error/invalid-credentials.error.ts';
+import { createStyles } from './default.styles.ts';
+import { signInSchema, type SignInFormValues } from './sign-in.schema.ts';
+
+interface SignInFormProps {
+  readonly phone: string;
 }
 
-export const SignInForm = () => {
+export const SignInForm: React.FC<SignInFormProps> = ({ phone }) => {
+  const { theme } = useTheme();
+  const styles = React.useMemo(() => createStyles(theme), [theme]);
+  const submit = useSubmit(SignInControllerInterface);
   const methods = useForm<SignInFormValues>({
-    defaultValues: {
-      login: '',
-    },
+    defaultValues: { password: '' },
+    resolver: yupResolver(signInSchema),
   });
+  const [secure, setSecure] = React.useState(true);
+
+  React.useEffect(() => {
+    if (submit.error instanceof InvalidCredentialsError) {
+      methods.setError('password', { message: submit.error.message, type: 'server' });
+    }
+  }, [methods, submit.error]);
+
+  const onSubmit = methods.handleSubmit(submit);
 
   return (
     <FormProvider {...methods}>
-      <View style={s.container}>
-        <View>
-          <Controller
-            control={methods.control}
-            name="login"
-            render={({ field: { onBlur, onChange, ref, value } }) => (
-              <Field>
-                <Field.Label>
-                  <Label label={'Логин'} />
-                </Field.Label>
-                <Field.Content>
-                  <Input
-                    ref={ref}
-                    autoFocus={true}
-                    enterKeyHint={'done'}
-                    value={value}
-                    onBlur={onBlur}
-                    onChangeText={onChange}
+      <View style={styles.wrapper}>
+        <Field>
+          <Field.Content>
+            <InputMask
+              autoComplete="tel"
+              disabled
+              keyboardType="phone-pad"
+              leadIcon={<Icon icon="phone-line" />}
+              mask="+9 (999) 999-99-99"
+              onChangeText={() => undefined}
+              value={phone}
+            />
+          </Field.Content>
+        </Field>
+        <Controller
+          control={methods.control}
+          name="password"
+          render={({ field, fieldState: { error } }) => (
+            <Field>
+              <Field.Content>
+                <Input
+                  autoComplete="password"
+                  autoFocus
+                  button={
+                    <Input.Button
+                      disabled={!field.value || field.value.length < 6}
+                      inProcess={submit.inProcess}
+                      onPress={() => void onSubmit()}
+                      tailIcon={<Icon icon="arrow-right-line" style={styles.tailIcon} />}
+                    />
+                  }
+                  leadIcon={<Icon icon="lock-password-line" />}
+                  onBlur={field.onBlur}
+                  onChangeText={(value) => {
+                    field.onChange(value);
+                    methods.clearErrors('password');
+                  }}
+                  onSubmitEditing={() => void onSubmit()}
+                  onTailIconPress={() => setSecure((value) => !value)}
+                  placeholder="Пароль"
+                  returnKeyType="done"
+                  secureTextEntry={secure}
+                  tailIcon={<Icon icon={secure ? 'eye-off-line' : 'eye-line'} />}
+                  target={error ? 'destructive' : undefined}
+                  value={field.value}
+                />
+              </Field.Content>
+              {error ? (
+                <Field.Caption>
+                  <Caption
+                    caption={error.message ?? 'Неверный пароль'}
+                    leadIcon={<Icon icon="information-line" />}
+                    state="destructive"
                   />
-                </Field.Content>
-              </Field>
-            )}
-          />
-        </View>
+                </Field.Caption>
+              ) : null}
+            </Field>
+          )}
+        />
       </View>
     </FormProvider>
   );
 };
-
-const s = StyleSheet.create({
-  container: {
-    gap: 8,
-  },
-  label: {
-    color: '#ffffff',
-    fontSize: 20,
-  },
-  text: {
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderRadius: 8,
-    borderColor: '#ffffff',
-    color: '#ffffff',
-    fontSize: 20,
-  },
-});

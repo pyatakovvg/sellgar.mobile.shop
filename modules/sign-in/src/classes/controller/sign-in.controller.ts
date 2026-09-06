@@ -1,146 +1,119 @@
-import { AuthServiceInterface, LoginWithIdentificationEntity, PasswordServiceInterface } from '@library/domain';
+import { AuthServiceInterface } from '@library/domain';
+import type { LoginPendingIdentificationEntity, LoginWithIdentificationEntity } from '@library/domain';
+import { AuthBlockedRoute, ReidentificationRoute, SetSignInCodeRoute } from '@library/route-tokens';
+import {
+  BadRequestException,
+  Controller,
+  Inject,
+  LocationServiceInterface,
+  NavigateServiceInterface,
+  UserRequestServiceInterface,
+} from '@sellgar/app';
+import { plainToInstance } from 'class-transformer';
+import { validateOrReject } from 'class-validator';
 
-import { Inject, Injectable } from '@sellgar/app';
-
+import { InvalidCredentialsError } from '../error/invalid-credentials.error.ts';
 import { SignInControllerInterface } from './sign-in-controller.interface.ts';
+import { SignInRouteStateEntity } from './domain/sign-in-route-state.entity.ts';
 
-import { SignInStoreInterface } from '../store/sign-in/sign-in-store.interface.ts';
-import { StepStoreInterface } from '../store/step/step-store.interface.ts';
-import { OtpStoreInterface } from '../store/otp/otp-store.interface.ts';
-import { ReidentificationCompletionError } from '../errors/reidentification-completion.error.ts';
-
-@Injectable()
-export class SignInController implements SignInControllerInterface {
-  private reidentificationCredentials: { phone: string; password: string } | null = null;
-
+@Controller()
+export class SignInController extends SignInControllerInterface {
   constructor(
-    @Inject(SignInStoreInterface) readonly signInStore: SignInStoreInterface,
-    @Inject(AuthServiceInterface) private readonly authService: AuthServiceInterface,
-    @Inject(PasswordServiceInterface) private readonly passwordService: PasswordServiceInterface,
-    @Inject(StepStoreInterface) readonly stepStore: StepStoreInterface,
-    @Inject(OtpStoreInterface) readonly otpStore: OtpStoreInterface,
-  ) {}
-
-  async signInByCredentials(phone: string, password: string): Promise<LoginWithIdentificationEntity> {
-    this.signInStore.setProcess(true);
-    try {
-      const result = await this.authService.signInByCredentials(phone, password);
-
-      if (result.nextAction === 'Tokens') {
-        this.clearReidentification();
-      } else {
-        this.reidentificationCredentials = { phone, password };
-        this.signInStore.startReidentification(result.data);
-      }
-
-      return result;
-    } catch (e) {
-      throw e;
-    } finally {
-      this.signInStore.setProcess(false);
-    }
+    @Inject(AuthServiceInterface)
+    private readonly authService: AuthServiceInterface,
+    @Inject(LocationServiceInterface)
+    private readonly location: LocationServiceInterface,
+    @Inject(NavigateServiceInterface)
+    private readonly navigate: NavigateServiceInterface,
+    @Inject(UserRequestServiceInterface)
+    private readonly userRequest: UserRequestServiceInterface,
+  ) {
+    super();
   }
 
-  openReidentification(): string | null {
-    const identification = this.signInStore.pendingIdentification;
-
-    if (
-      !identification ||
-      !this.reidentificationCredentials ||
-      this.signInStore.reidentificationPhase !== 'confirmation'
-    ) {
-      return null;
-    }
-
-    this.signInStore.setReidentificationPhase('webview');
-
-    return identification.identificationLink;
+  async loader(): Promise<SignInRouteStateEntity> {
+    return this.readRouteState();
   }
 
-  async completeReidentification(): Promise<boolean> {
-    if (this.signInStore.reidentificationPhase !== 'webview') {
-      return false;
-    }
-
-    this.signInStore.setReidentificationPhase('completing');
-    this.signInStore.setProcess(true);
+  async action({ payload }: Parameters<SignInControllerInterface['action']>[0]): Promise<void> {
+    const state = await this.readRouteState();
+    let result: LoginWithIdentificationEntity;
 
     try {
-      const identification = this.signInStore.pendingIdentification;
-      const credentials = this.reidentificationCredentials;
-
-      if (!identification) {
-        throw new ReidentificationCompletionError('status');
-      }
-
-      if (!credentials) {
-        throw new ReidentificationCompletionError('login');
-      }
-
-      const status = await this._waitReidentificationStatus(identification.requestUuid);
-
-      if (status.status !== 'Success') {
-        throw new ReidentificationCompletionError('status', status);
-      }
-
-      await this._loginAfterReidentification(credentials.phone, credentials.password);
-      this.clearReidentification();
-
-      return true;
+      result = await this.authService.signInByCredentials(state.phone, payload.password);
     } catch (error) {
-      this.clearReidentification();
+      return this.handleError(error);
+    }
+
+    if (isPendingIdentification(result)) {
+      await this.navigate.to(ReidentificationRoute, {
+        state: {
+          expiresAt: result.data.expiresAt,
+          identificationLink: result.data.identificationLink,
+          requestUuid: result.data.requestUuid,
+        },
+      });
+      return;
+    }
+
+    await this.navigate.to(SetSignInCodeRoute, { state: { phone: state.phone } });
+  }
+
+  private async handleError(error: unknown): Promise<never> {
+    const code = getErrorCode(error);
+
+    if (code === '206' || code === '216') {
+      await this.navigate.to(AuthBlockedRoute, {
+        state: { title: 'Доступ к аккаунту ограничен' },
+      });
       throw error;
-    } finally {
-      this.signInStore.setProcess(false);
-    }
-  }
-
-  failReidentification(): boolean {
-    if (this.signInStore.reidentificationPhase !== 'webview') {
-      return false;
     }
 
-    this.clearReidentification();
-    return true;
-  }
-
-  clearReidentification(): void {
-    this.reidentificationCredentials = null;
-    this.signInStore.clearReidentification();
-  }
-
-  private async _waitReidentificationStatus(requestUuid: string) {
-    try {
-      return await this.authService.waitReidentificationFinalStatus(requestUuid);
-    } catch (error) {
-      throw new ReidentificationCompletionError('status', error);
+    if (code === '207') {
+      await this.navigate.to(AuthBlockedRoute, {
+        state: { title: 'Доступ к аккаунту временно ограничен' },
+      });
+      throw error;
     }
-  }
 
-  private async _loginAfterReidentification(phone: string, password: string) {
-    try {
-      const result = await this.authService.signInByCredentials(phone, password);
-
-      if (result.nextAction !== 'Tokens') {
-        throw new ReidentificationCompletionError('login', result);
-      }
-    } catch (error) {
-      if (error instanceof ReidentificationCompletionError) {
-        throw error;
-      }
-
-      throw new ReidentificationCompletionError('login', error);
+    if (code === '210') {
+      await this.userRequest.alert({
+        description: 'Попробуйте повторить операцию позже',
+        title: 'Слишком много попыток',
+      });
+      throw error;
     }
+
+    if (error instanceof BadRequestException) {
+      throw new InvalidCredentialsError({ cause: error });
+    }
+
+    await this.userRequest.alert({
+      description: 'Попробуйте повторить операцию позже',
+      title: 'Что-то пошло не так',
+    });
+    throw error;
   }
 
-  async requestResetPassword(phone: string) {
-    const result = await this.passwordService.requestSmsCode(phone, this.signInStore.requestUuid);
-    this.otpStore.execute(result.data.verification, phone);
-    this.stepStore.nextStep('OTP_CODE');
-    return result;
-  }
+  private async readRouteState(): Promise<SignInRouteStateEntity> {
+    const state = plainToInstance(SignInRouteStateEntity, this.location.location?.state ?? {});
 
-  async checkResetStatus(requestUuid: string) {
-    return await this.passwordService.waitResetFinalStatus(requestUuid);
+    await validateOrReject(state);
+
+    return state;
   }
 }
+
+const getErrorCode = (error: unknown): string | null => {
+  if (!(error instanceof BadRequestException) || typeof error.response !== 'object' || error.response === null) {
+    return null;
+  }
+
+  const payload = Reflect.get(error.response, 'error');
+  const code = typeof payload === 'object' && payload !== null ? Reflect.get(payload, 'code') : null;
+
+  return typeof code === 'string' ? code : null;
+};
+
+const isPendingIdentification = (result: LoginWithIdentificationEntity): result is LoginPendingIdentificationEntity =>
+  result.nextAction === 'PendingIdentification';

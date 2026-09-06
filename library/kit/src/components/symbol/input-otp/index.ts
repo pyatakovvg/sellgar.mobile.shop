@@ -1,1 +1,1 @@
-export { InputOtp } from './input-otp.tsx';
+export { InputOtp, type InputOtpHandle } from './input-otp.tsx';

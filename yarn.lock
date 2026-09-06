@@ -784,7 +784,9 @@ __metadata:
     "@library/domain": "npm:0.0.1"
     "@library/kit": "npm:0.0.1"
     "@library/route-tokens": "npm:0.0.1"
+    "@module/auth-otp": "npm:0.0.1"
     "@module/check-phone": "npm:0.0.1"
+    "@module/password-reset-otp": "npm:0.0.1"
     "@module/sign-in": "npm:0.0.1"
     "@react-native-async-storage/async-storage": "npm:3.1.1"
     "@react-native-community/cli": "npm:20.2.0"
@@ -1784,6 +1786,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@module/auth-otp@npm:0.0.1, @module/auth-otp@workspace:modules/auth-otp":
+  version: 0.0.0-use.local
+  resolution: "@module/auth-otp@workspace:modules/auth-otp"
+  dependencies:
+    "@library/domain": "npm:0.0.1"
+    "@library/kit": "npm:0.0.1"
+    "@library/route-tokens": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    "@widget/otp": "npm:0.0.1"
+    class-transformer: "npm:0.5.1"
+    class-validator: "npm:0.15.1"
+    react: "npm:19.2.8"
+    react-native: "npm:0.87.1"
+  languageName: unknown
+  linkType: soft
+
 "@module/check-phone@npm:0.0.1, @module/check-phone@workspace:modules/check-phone":
   version: 0.0.0-use.local
   resolution: "@module/check-phone@workspace:modules/check-phone"
@@ -1803,19 +1822,41 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@module/password-reset-otp@npm:0.0.1, @module/password-reset-otp@workspace:modules/password-reset-otp":
+  version: 0.0.0-use.local
+  resolution: "@module/password-reset-otp@workspace:modules/password-reset-otp"
+  dependencies:
+    "@library/domain": "npm:0.0.1"
+    "@library/kit": "npm:0.0.1"
+    "@library/route-tokens": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    "@widget/otp": "npm:0.0.1"
+    class-transformer: "npm:0.5.1"
+    class-validator: "npm:0.15.1"
+    react: "npm:19.2.8"
+    react-native: "npm:0.87.1"
+  languageName: unknown
+  linkType: soft
+
 "@module/sign-in@npm:0.0.1, @module/sign-in@workspace:modules/sign-in":
   version: 0.0.0-use.local
   resolution: "@module/sign-in@workspace:modules/sign-in"
   dependencies:
+    "@hookform/resolvers": "npm:5.9.1"
+    "@library/design": "npm:0.0.1"
     "@library/domain": "npm:0.0.1"
     "@library/kit": "npm:0.0.1"
+    "@library/route-tokens": "npm:0.0.1"
     "@sellgar/app": "npm:0.0.1"
     "@types/react": "npm:19.2.18"
     "@utils/generate": "npm:0.0.1"
-    mobx: "npm:6.16.1"
+    class-transformer: "npm:0.5.1"
+    class-validator: "npm:0.15.1"
     react: "npm:19.2.8"
     react-hook-form: "npm:7.87.0"
     react-native: "npm:0.87.1"
+    yup: "npm:1.7.1"
   languageName: unknown
   linkType: soft
 
@@ -2763,6 +2804,21 @@ __metadata:
   checksum: 10/2eabbf59ba784c5828d9f45cde2ada83f51796d88dea05ed0c270a98545ad5f47c8d48e54c2ed335273ec75499e9700ee8b48f1d9bf2bb3e42050faf1070d8c3
   languageName: node
   linkType: hard
+
+"@widget/otp@npm:0.0.1, @widget/otp@workspace:widgets/otp":
+  version: 0.0.0-use.local
+  resolution: "@widget/otp@workspace:widgets/otp"
+  dependencies:
+    "@library/domain": "npm:0.0.1"
+    "@library/kit": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    "@utils/format": "npm:0.0.1"
+    react: "npm:19.2.8"
+    react-hook-form: "npm:7.87.0"
+    react-native: "npm:0.87.1"
+  languageName: unknown
+  linkType: soft
 
 "@xmldom/xmldom@npm:^0.9.10":
   version: 0.9.12
