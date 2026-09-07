@@ -29,7 +29,7 @@ export class AuthGateway implements AuthGatewayInterface {
 
   async refresh(refreshToken: string): Promise<AuthResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'auth:refresh' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post<AuthResultEntity>(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/auth/devices/refresh', {
         refreshToken,
       });
@@ -43,7 +43,7 @@ export class AuthGateway implements AuthGatewayInterface {
 
   async restore(dto: SessionRestoreInput): Promise<AuthResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'auth:restore' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post<AuthResultEntity>(
         this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/auth/devices/sessions/restore',
         dto,
@@ -58,7 +58,7 @@ export class AuthGateway implements AuthGatewayInterface {
 
   async signInByCredentials(phone: string, password: string): Promise<LoginWithIdentificationEntity> {
     const result = await this.requestExecutor.run({ scope: 'auth:sign-in' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/auth/devices/login-with-identification', {
         phone,
         password,
@@ -76,7 +76,7 @@ export class AuthGateway implements AuthGatewayInterface {
     const result = await this.requestExecutor.run(
       { scope: `auth:reidentification-status:${requestUuid}` },
       async ({ signal }) => {
-        const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+        const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
         return request.get(
           this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/auth/identification/${requestUuid}/status`,
         );
@@ -91,7 +91,7 @@ export class AuthGateway implements AuthGatewayInterface {
 
   async passwordReset(dto: PasswordResetInput): Promise<AuthResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'auth:password-reset' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/auth/devices/reset-password', dto);
     });
     const resultInstance = plainToInstance(AuthResultEntity, result);
@@ -103,7 +103,7 @@ export class AuthGateway implements AuthGatewayInterface {
 
   async startAuth(dto: AuthStartInput): Promise<AuthStartResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'auth:start' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/auth/devices/start', dto);
     });
     const resultInstance = plainToInstance(AuthStartResultEntity, result);

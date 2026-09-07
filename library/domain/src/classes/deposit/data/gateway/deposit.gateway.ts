@@ -22,7 +22,7 @@ export class DepositGateway implements DepositGatewayInterface {
 
   async getDetails(method: string): Promise<DepositDetailsResultEntity> {
     const result = await this.requestExecutor.run({ scope: `deposits:details:${method}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get(this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/deposits/${method}/details`);
     });
     const resultInstance = plainToInstance(DepositDetailsResultEntity, result);
@@ -34,7 +34,7 @@ export class DepositGateway implements DepositGatewayInterface {
 
   async create({ method, ...data }: DepositCreateInput): Promise<DraftOperationResultEntity> {
     const result = await this.requestExecutor.run({ scope: `deposits:create:${method}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/deposits/${method}`, data);
     });
     const resultInstance = plainToInstance(DraftOperationResultEntity, result);

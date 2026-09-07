@@ -19,7 +19,7 @@ export class PayCategoryGateway implements PayCategoryGatewayInterface {
 
   async getAll() {
     const result = await this.requestExecutor.run({ scope: 'pay-categories:list' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/services/groups');
     });
     const resultInstance = plainToInstance(PayCategoryResultEntity, result);

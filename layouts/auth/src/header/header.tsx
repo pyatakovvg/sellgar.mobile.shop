@@ -16,11 +16,11 @@ export const Header: React.FC<IProps> = (props) => {
 
   return (
     <View style={baseStyles.wrapper}>
-      {props.withBackBtn && (
-        <TouchableOpacity onPress={props.onPressBack}>
-          <Icon icon={'arrow-left-s-line'} style={baseStyles.icon} />
-        </TouchableOpacity>
-      )}
+      {/*{props.withBackBtn && (*/}
+      <TouchableOpacity onPress={props.onPressBack}>
+        <Icon icon={'arrow-left-s-line'} style={baseStyles.icon} />
+      </TouchableOpacity>
+      {/*)}*/}
     </View>
   );
 };

@@ -20,7 +20,7 @@ export class ChangePhoneGateway implements ChangePhoneGatewayInterface {
 
   async initiate(params: ChangePhoneInput) {
     const result = await this.requestExecutor.run({ scope: 'change-phone:initiate' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post<ChangePhoneResultEntity>(
         this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/change-phone/initiate',
         params,
@@ -35,7 +35,7 @@ export class ChangePhoneGateway implements ChangePhoneGatewayInterface {
 
   async getStatus(uuid: string) {
     const result = await this.requestExecutor.run({ scope: `change-phone:status:${uuid}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get<ChangePhoneResultEntity>(
         this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/change-phone/${uuid}/status`,
       );

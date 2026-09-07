@@ -20,7 +20,7 @@ export class MobileVersionGateway implements MobileVersionGatewayInterface {
 
   async check(dto: MobileVersionCheckDto): Promise<MobileVersionResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'mobile-version:check' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post<MobileVersionResultEntity>(
         this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/mobile/version/check',
         dto,

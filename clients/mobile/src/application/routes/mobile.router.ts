@@ -36,7 +36,7 @@ const createAnonymousBranch = (): Route => {
   return new Route({
     canMatch: [RequireAnonymousSessionPolicy.configure().onFail(Router.redirectToSaved({ replace: true }))],
     defaultTo: Router.firstAvailable(),
-    layouts: [],
+    layouts: [AuthLayout],
     routes: [
       new Route({
         address: segments('sign-in-by-code'),

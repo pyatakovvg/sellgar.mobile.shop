@@ -28,7 +28,7 @@ export class SessionGateway implements SessionGatewayInterface {
     const result = await this.requestExecutor.run({ scope: 'session:create' }, async ({ signal }) => {
       const request = new HttpRequest({
         accessToken: this.authService.getAccessToken(),
-        deviceId: await this.deviceService.getDeviceUniqueId(),
+        clientDevice: await this.deviceService.getClientDeviceHeader(),
         signal,
       });
       return request.post<SessionCreateResultEntity>(
@@ -47,7 +47,7 @@ export class SessionGateway implements SessionGatewayInterface {
     const result = await this.requestExecutor.run({ scope: 'session:logout' }, async ({ signal }) => {
       const request = new HttpRequest({
         accessToken: this.authService.getAccessToken(),
-        deviceId: await this.deviceService.getDeviceUniqueId(),
+        clientDevice: await this.deviceService.getClientDeviceHeader(),
         signal,
       });
       return request.post<SessionLogoutResultEntity>(

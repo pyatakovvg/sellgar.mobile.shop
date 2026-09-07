@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@layout/auth": "0.0.1",
+    "@layout/main": "0.0.1",
     "@library/domain": "0.0.1",
     "@library/kit": "0.0.1",
     "@library/route-tokens": "0.0.1",

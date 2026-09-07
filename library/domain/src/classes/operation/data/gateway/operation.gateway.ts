@@ -22,7 +22,7 @@ export class OperationGateway implements OperationGatewayInterface {
 
   async getAll(params: OperationParamsInput): Promise<OperationResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'operations:list' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/wallets/current/operations', { params });
     });
     const resultInstance = plainToInstance(OperationResultEntity, result);
@@ -34,7 +34,7 @@ export class OperationGateway implements OperationGatewayInterface {
 
   async getByUuid(uuid: string): Promise<OperationByUuidResultEntity> {
     const result = await this.requestExecutor.run({ scope: `operation:${uuid}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/wallets/current/operations/' + uuid);
     });
     const resultInstance = plainToInstance(OperationByUuidResultEntity, result);

@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "@layout/auth",
+  "name": "@layout/main",
   "type": "module",
   "version": "0.0.1",
-  "description": "",
+  "description": "Root presentation layout for the Sellgar mobile application",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "dependencies": {

@@ -30,7 +30,7 @@ export class IdentificationGateway implements IdentificationGatewayInterface {
     const result = await this.requestExecutor.run(
       { scope: `identification:check:${dto.requestUuid}` },
       async ({ signal }) => {
-        const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+        const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
         return request.post(this.config.get('GATEWAY_HOST_API') + '/kyc/' + dto.requestUuid + '/check', {
           checkData: requestDto,
         });
@@ -47,7 +47,7 @@ export class IdentificationGateway implements IdentificationGatewayInterface {
     const result = await this.requestExecutor.run(
       { scope: `identification:liveness:${requestUuid}` },
       async ({ signal }) => {
-        const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+        const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
         return request.post(this.config.get('GATEWAY_HOST_API') + '/kyc/' + requestUuid + '/liveness', {});
       },
     );
@@ -62,7 +62,7 @@ export class IdentificationGateway implements IdentificationGatewayInterface {
     const result = await this.requestExecutor.run(
       { scope: `identification:rollback:${requestUuid}` },
       async ({ signal }) => {
-        const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+        const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
         return request.post(this.config.get('GATEWAY_HOST_API') + '/kyc/' + requestUuid + '/return', {});
       },
     );
@@ -75,7 +75,7 @@ export class IdentificationGateway implements IdentificationGatewayInterface {
 
   async createIdentification() {
     const result = await this.requestExecutor.run({ scope: 'identification:create' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/identifications', {});
     });
     const resultInstance = plainToInstance(CreateIdentificationResultEntity, result);
@@ -89,7 +89,7 @@ export class IdentificationGateway implements IdentificationGatewayInterface {
     const result = await this.requestExecutor.run(
       { scope: `identification:questionnaire:${requestUuid}` },
       async ({ signal }) => {
-        const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+        const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
         return request.get(this.config.get('GATEWAY_HOST_API') + '/kyc/' + requestUuid + '/questionnaire');
       },
     );

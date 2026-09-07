@@ -19,7 +19,7 @@ export class FeaturesGateway implements FeaturesGatewayInterface {
 
   async get(): Promise<FeaturesResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'features:get' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/features');
     });
     const resultInstance = plainToInstance(FeaturesResultEntity, result);

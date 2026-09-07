@@ -19,7 +19,7 @@ export class BalanceGateway implements BalanceGatewayInterface {
 
   async getAll(): Promise<BalanceResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'balances:list' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/wallets/current/balances');
     });
     const resultInstance = plainToInstance(BalanceResultEntity, result);

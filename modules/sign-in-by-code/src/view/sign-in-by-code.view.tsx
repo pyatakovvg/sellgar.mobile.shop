@@ -77,8 +77,8 @@ export const SignInByCodeView: React.FC = () => {
           <View style={styles.content}>
             <PinCode
               dots={dots}
-              errorMessage={invalidCode ? 'Неверный код доступа\n' : ''}
-              label="Введите код доступа\n"
+              errorMessage={invalidCode ? 'Неверный код доступа' : ''}
+              label="Введите код доступа"
               loading={inProcess}
               numPadLeftSlot={
                 biometryType ? (

@@ -20,7 +20,7 @@ export class OtpGateway implements OtpGatewayInterface {
 
   async resend(verificationUuid: string): Promise<OtpResultEntity> {
     const result = await this.requestExecutor.run({ scope: `otp:resend:${verificationUuid}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post<OtpResultEntity>(
         this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/otp/${verificationUuid}/resend`,
         {},
@@ -35,7 +35,7 @@ export class OtpGateway implements OtpGatewayInterface {
 
   async confirm(otpCode: string, verificationUuid: string): Promise<OtpResultEntity> {
     const result = await this.requestExecutor.run({ scope: `otp:confirm:${verificationUuid}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post<OtpResultEntity>(
         this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/otp/${verificationUuid}/confirm`,
         { otpCode },
@@ -49,7 +49,7 @@ export class OtpGateway implements OtpGatewayInterface {
 
   async getOtp(verificationUuid: string): Promise<OtpResultEntity> {
     const result = await this.requestExecutor.run({ scope: `otp:get:${verificationUuid}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get<OtpResultEntity>(this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/otp/${verificationUuid}`);
     });
     const resultInstance = plainToInstance(OtpResultEntity, result);

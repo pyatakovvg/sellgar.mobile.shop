@@ -21,7 +21,7 @@ export class CommissionGateway implements CommissionGatewayInterface {
 
   async calculate(data: CommissionCalculateInput): Promise<CommissionResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'commissions:calculate' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/commissions/calculate', data);
     });
     const resultInstance = plainToInstance(CommissionResultEntity, result);

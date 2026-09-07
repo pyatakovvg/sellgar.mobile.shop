@@ -10,7 +10,8 @@ import {
 } from '@sellgar/app/native';
 import { UseBindings } from '@sellgar/app';
 
-import { BaseLayout } from '../layouts/base';
+import { MainLayout } from '@layout/main';
+
 import { Status } from './components/status';
 import { Fallback } from './components/frame/fallback';
 import { MobileBindings } from './bindings';
@@ -19,11 +20,13 @@ import { createMobileRouter } from './routes';
 import { NavigationBlocker } from './presentations/navigation-blocker';
 import { DestructiveNotification, InfoNotification, SuccessNotification } from './presentations/notification';
 import { AlertUserRequest, ConfirmUserRequest, PromptUserRequest } from './presentations/user-request';
-import { DrawerShell } from '../shells/drawer/src';
+import { DrawerShell } from './shells/drawer';
 
 @UseBindings(MobileBindings)
 export class MobileApplication extends Application {
-  protected configure(app: ApplicationConfiguratorInterface): void {
+  protected configure(app: ApplicationConfiguratorInterface) {
+    app.layouts([MainLayout]);
+
     app.components({
       exception: <Status title="Module failed" tone="error" />,
       failed: <Status title="Application failed" tone="error" />,
@@ -32,6 +35,15 @@ export class MobileApplication extends Application {
       notFound: <Status title="Route not found" tone="error" />,
       splash: <Status title="Starting core runtime" loading />,
     });
+
+    app.routing({
+      exception: <Status title="Nested route failed" tone="error" />,
+      fallback: <Fallback />,
+      forbidden: <Status title="Nested route forbidden" tone="error" />,
+      notFound: <Status title="Nested route not found" tone="error" />,
+      shell: DrawerShell,
+    });
+
     app.features([
       NavigationBlockerFeature.configure({
         presentation: NavigationBlockerPresentation.define(NavigationBlocker),
@@ -51,15 +63,9 @@ export class MobileApplication extends Application {
         }),
       }),
     ]);
-    app.layouts([BaseLayout]);
+
     app.initializers([ResolveSessionInitializer, ApplicationLifecycleInitializer]);
-    app.routing({
-      exception: <Status title="Nested route failed" tone="error" />,
-      fallback: <Fallback />,
-      forbidden: <Status title="Nested route forbidden" tone="error" />,
-      notFound: <Status title="Nested route not found" tone="error" />,
-      shell: DrawerShell,
-    });
+
     app.router(createMobileRouter());
   }
 }

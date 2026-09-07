@@ -1,8 +1,8 @@
-import { scales, TTheme } from '@library/kit';
+import { scales } from '@library/kit';
 
 import { StyleSheet } from 'react-native';
 
-export const createStyles = (theme: TTheme) => {
+export const createStyles = () => {
   return StyleSheet.create({
     wrapper: {
       flex: 1,

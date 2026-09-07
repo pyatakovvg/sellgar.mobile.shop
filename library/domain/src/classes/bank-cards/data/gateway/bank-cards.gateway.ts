@@ -23,7 +23,7 @@ export class BankCardsGateway implements BankCardsGatewayInterface {
 
   async verify(bin: string): Promise<BinCheckResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'bank-cards:verify' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/bank-cards/verify', { bin });
     });
     const resultInstance = plainToInstance(BinCheckResultEntity, result);
@@ -35,7 +35,7 @@ export class BankCardsGateway implements BankCardsGatewayInterface {
 
   async getCards(capabilities?: TBankCardCapabilities): Promise<BankCardResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'bank-cards:list' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/bank-cards/tokens', {
         params: { capabilities },
       });
@@ -50,7 +50,7 @@ export class BankCardsGateway implements BankCardsGatewayInterface {
 
   async deleteCard(token: string): Promise<BankCardDeleteResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'bank-cards:delete' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/bank-cards/tokens/${token}`, {});
     });
 

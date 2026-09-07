@@ -29,14 +29,14 @@ export class HttpRequest {
   constructor(
     private readonly options: {
       readonly accessToken?: string;
-      readonly deviceId: string;
+      readonly clientDevice: string | null;
       readonly signal: AbortSignal;
     },
   ) {
     this.axiosInstance = axios.create({
       headers: {
         ...(options.accessToken ? { Authorization: `Bearer ${options.accessToken}` } : {}),
-        'X-Device-Id': options.deviceId,
+        ...(options.clientDevice ? { 'X-Client-Device': options.clientDevice } : {}),
       },
       paramsSerializer: (params) => this.serializeParams(params),
       timeout: REQUEST_TIMEOUT,

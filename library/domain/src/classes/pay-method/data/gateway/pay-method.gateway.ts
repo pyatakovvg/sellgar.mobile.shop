@@ -24,7 +24,7 @@ export class PayMethodGateway implements PayMethodGatewayInterface {
 
   async pay(values: MethodPayInput): Promise<DraftOperationResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'pay-methods:pay' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/services/pay', values);
     });
     const resultInstance = plainToInstance(DraftOperationResultEntity, result);
@@ -36,7 +36,7 @@ export class PayMethodGateway implements PayMethodGatewayInterface {
 
   async verify(values: PayMethodVerifyInput): Promise<PayMethodVerifyResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'pay-methods:verify' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/services/verify', values);
     });
     const resultInstance = plainToInstance(PayMethodVerifyResultEntity, result);
@@ -50,7 +50,7 @@ export class PayMethodGateway implements PayMethodGatewayInterface {
     const result = await this.requestExecutor.run(
       { scope: `pay-methods:get:${groupId}:${methodName}` },
       async ({ signal }) => {
-        const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+        const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
         return request.get(
           this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/services/groups/' + groupId + '/methods/' + methodName,
         );

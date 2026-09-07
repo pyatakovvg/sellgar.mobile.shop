@@ -25,7 +25,7 @@ export class WithdrawalGateway implements WithdrawalGatewayInterface {
     const result = await this.requestExecutor.run(
       { scope: `withdrawal:bank-card:confirm:${operationUuid}` },
       async ({ signal }) => {
-        const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+        const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
         return request.post(
           this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/withdrawals/bank-card/' + operationUuid + '/confirm',
           { code },
@@ -41,7 +41,7 @@ export class WithdrawalGateway implements WithdrawalGatewayInterface {
 
   async withdrawalToBankCard(values: WithdrawalInput): Promise<DraftOperationResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'withdrawal:bank-card:create' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/withdrawals/bank-card', values);
     });
     const resultInstance = plainToInstance(DraftOperationResultEntity, result);
@@ -53,7 +53,7 @@ export class WithdrawalGateway implements WithdrawalGatewayInterface {
 
   async verifyBankCard(bin: string): Promise<VerifyBankcardResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'withdrawal:bank-card:verify' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/withdrawals/bank-card/verify', { bin });
     });
     const resultInstance = plainToInstance(VerifyBankcardResultEntity, result);

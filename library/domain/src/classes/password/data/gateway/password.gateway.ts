@@ -16,7 +16,7 @@ export class PasswordGateway implements PasswordGatewayInterface {
 
   requestSmsCode(phone: string, requestUuid: string) {
     return this.requestExecutor.run({ scope: `password-recovery:initiate:${requestUuid}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/password-recovery/initiate', {
         requestUuid,
         phone,
@@ -26,7 +26,7 @@ export class PasswordGateway implements PasswordGatewayInterface {
 
   phoneConfirm(phone: string, code: string, token: string, requestUuid: string) {
     return this.requestExecutor.run({ scope: `password-recovery:confirm:${requestUuid}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.post(
         this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/password-recovery/${requestUuid}/phone-confirm`,
         {
@@ -40,7 +40,7 @@ export class PasswordGateway implements PasswordGatewayInterface {
 
   checkStatus(requestUuid: string) {
     return this.requestExecutor.run({ scope: `password-recovery:status:${requestUuid}` }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get(this.config.get('GATEWAY_WALLETS_BFF_API') + `/v1/password-recovery/${requestUuid}/status`);
     });
   }

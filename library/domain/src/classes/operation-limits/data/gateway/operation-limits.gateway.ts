@@ -21,7 +21,7 @@ export class OperationLimitsGateway implements OperationLimitsGatewayInterface {
 
   async getLimits(params: OperationLimitsInput): Promise<OperationLimitsResultEntity> {
     const result = await this.requestExecutor.run({ scope: 'operation-limits:get' }, async ({ signal }) => {
-      const request = new HttpRequest({ deviceId: await this.deviceService.getDeviceUniqueId(), signal });
+      const request = new HttpRequest({ clientDevice: await this.deviceService.getClientDeviceHeader(), signal });
       return request.get(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/operation-limits', { params });
     });
     const resultInstance = plainToInstance(OperationLimitsResultEntity, result);

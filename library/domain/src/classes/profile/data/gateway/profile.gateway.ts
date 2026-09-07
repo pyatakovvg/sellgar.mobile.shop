@@ -23,7 +23,7 @@ export class ProfileGateway implements ProfileGatewayInterface {
     const result = await this.requestExecutor.run({ scope: 'profile:get' }, async ({ signal }) => {
       const request = new HttpRequest({
         accessToken: this.authService.getAccessToken(),
-        deviceId: await this.deviceService.getDeviceUniqueId(),
+        clientDevice: await this.deviceService.getClientDeviceHeader(),
         signal,
       });
       return request.get<ProfileResultEntity>(this.config.get('GATEWAY_WALLETS_BFF_API') + '/v1/auth/profile');
