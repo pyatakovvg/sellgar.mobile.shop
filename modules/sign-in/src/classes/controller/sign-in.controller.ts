@@ -61,7 +61,7 @@ export class SignInController extends SignInControllerInterface {
       });
 
       try {
-        await this.navigate.to(ReidentificationConfirmRoute);
+        await this.navigate.to(ReidentificationConfirmRoute, { replace: true });
       } catch (error) {
         this.reidentification.clear();
         throw error;

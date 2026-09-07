@@ -1,6 +1,14 @@
 import { ReidentificationCompletionError, ReidentificationFlowServiceInterface } from '@library/domain';
-import { SetSignInCodeRoute } from '@library/route-tokens';
-import { Controller, Exception, Inject, NavigateServiceInterface, UserRequestServiceInterface } from '@sellgar/app';
+import { SetSignInCodeRoute, SignInRoute } from '@library/route-tokens';
+import {
+  BackServiceInterface,
+  type BackInterception,
+  Controller,
+  Exception,
+  Inject,
+  NavigateServiceInterface,
+  UserRequestServiceInterface,
+} from '@sellgar/app';
 
 import {
   ReidentificationControllerInterface,
@@ -9,7 +17,12 @@ import {
 
 @Controller()
 export class ReidentificationController extends ReidentificationControllerInterface {
+  private readonly backInterception: BackInterception;
+  private phone: string | null = null;
+
   constructor(
+    @Inject(BackServiceInterface)
+    back: BackServiceInterface,
     @Inject(NavigateServiceInterface)
     private readonly navigate: NavigateServiceInterface,
     @Inject(ReidentificationFlowServiceInterface)
@@ -18,6 +31,14 @@ export class ReidentificationController extends ReidentificationControllerInterf
     private readonly userRequest: UserRequestServiceInterface,
   ) {
     super();
+    this.backInterception = back.intercept(
+      () => this.phone !== null,
+      () => this.returnToSignIn(),
+    );
+  }
+
+  dispose(): void {
+    this.backInterception.dispose();
   }
 
   async action({ payload }: Parameters<ReidentificationControllerInterface['action']>[0]): Promise<void> {
@@ -45,22 +66,37 @@ export class ReidentificationController extends ReidentificationControllerInterf
   }
 
   async loader(): Promise<ReidentificationLoaderData> {
-    const pending = this.reidentification.getPendingIdentification();
+    const pending = this.reidentification.getPending();
 
     if (!pending) {
       throw new Exception('Re-identification flow is not initialized.');
     }
 
+    this.phone = pending.phone;
+
     return {
       failureUrlPart: 'wallets/id/fail',
-      source: { uri: pending.identificationLink },
+      source: { uri: pending.identification.identificationLink },
       successUrlPart: 'wallets/id/success',
     };
   }
 
   private async fail(title: string, description: string): Promise<void> {
-    this.reidentification.clear();
     await this.userRequest.alert({ description, title });
-    await this.navigate.back();
+    await this.returnToSignIn();
+  }
+
+  private async returnToSignIn(): Promise<void> {
+    const phone = this.phone;
+
+    if (phone === null) {
+      return;
+    }
+
+    this.reidentification.clear();
+    await this.navigate.to(SignInRoute, {
+      replace: true,
+      state: { phone },
+    });
   }
 }

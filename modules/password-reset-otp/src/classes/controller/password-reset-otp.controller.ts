@@ -3,8 +3,10 @@ import {
   PasswordServiceInterface,
   type StatusPasswordResetResultEntity,
 } from '@library/domain';
-import { AuthBlockedRoute, PasswordSetRoute } from '@library/route-tokens';
+import { AuthBlockedRoute, PasswordSetRoute, SignInRoute } from '@library/route-tokens';
 import {
+  BackServiceInterface,
+  type BackInterception,
   Controller,
   Exception,
   Inject,
@@ -23,7 +25,12 @@ import { PasswordResetOtpRouteStateEntity } from './domain/password-reset-otp-ro
 
 @Controller()
 export class PasswordResetOtpController extends PasswordResetOtpControllerInterface {
+  private readonly backInterception: BackInterception;
+  private phone: string | null = null;
+
   constructor(
+    @Inject(BackServiceInterface)
+    back: BackServiceInterface,
     @Inject(LocationServiceInterface)
     private readonly location: LocationServiceInterface,
     @Inject(NavigateServiceInterface)
@@ -34,12 +41,21 @@ export class PasswordResetOtpController extends PasswordResetOtpControllerInterf
     private readonly userRequest: UserRequestServiceInterface,
   ) {
     super();
+    this.backInterception = back.intercept(
+      () => this.phone !== null,
+      () => this.returnToSignIn(),
+    );
+  }
+
+  dispose(): void {
+    this.backInterception.dispose();
   }
 
   async loader({
     params,
   }: Parameters<PasswordResetOtpControllerInterface['loader']>[0]): Promise<PasswordResetOtpLoaderData> {
     const state = await this.readRouteState();
+    this.phone = state.phone;
     const result = await this.passwordService.requestSmsCode(state.phone, params.requestUuid);
 
     return {
@@ -96,5 +112,18 @@ export class PasswordResetOtpController extends PasswordResetOtpControllerInterf
     await validateOrReject(state);
 
     return state;
+  }
+
+  private async returnToSignIn(): Promise<void> {
+    const phone = this.phone;
+
+    if (phone === null) {
+      return;
+    }
+
+    await this.navigate.to(SignInRoute, {
+      replace: true,
+      state: { phone },
+    });
   }
 }

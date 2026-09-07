@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@sellgar/app';
 
-import type { PendingIdentificationEntity } from '../domain/pending-identification.entity.ts';
 import { AuthServiceInterface } from './auth-service.interface.ts';
 import { ReidentificationCompletionError } from './error/reidentification-completion.error.ts';
 import {
   ReidentificationFlowServiceInterface,
+  type ReidentificationFlowContext,
   type ReidentificationFlowInput,
 } from './reidentification-flow-service.interface.ts';
 
@@ -69,7 +69,9 @@ export class ReidentificationFlowService extends ReidentificationFlowServiceInte
     }
   }
 
-  getPendingIdentification(): PendingIdentificationEntity | null {
-    return this.flow?.identification ?? null;
+  getPending(): ReidentificationFlowContext | null {
+    const flow = this.flow;
+
+    return flow ? { identification: flow.identification, phone: flow.phone } : null;
   }
 }

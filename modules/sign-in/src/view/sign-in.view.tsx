@@ -27,6 +27,7 @@ export const SignInView: React.FC = () => {
             navigation={(navigate) =>
               navigate.to(PasswordResetOtpRoute, {
                 params: { requestUuid: data.passwordResetRequestUuid },
+                replace: true,
                 state: { phone: data.phone },
               })
             }

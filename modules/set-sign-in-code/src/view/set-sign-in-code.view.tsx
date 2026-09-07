@@ -1,6 +1,6 @@
 import { PinCode } from '@library/design';
 import { Icon, useTheme } from '@library/kit';
-import { Viewport, useSubmit } from '@sellgar/app/native';
+import { reactive, useDependency, Viewport, useSubmit } from '@sellgar/app/native';
 
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -8,11 +8,13 @@ import { TouchableOpacity, View } from 'react-native';
 import { ConfirmAccessCodeControllerInterface } from '../classes/controller/confirm/confirm-access-code-controller.interface.ts';
 import { SetAccessCodeControllerInterface } from '../classes/controller/set/set-access-code-controller.interface.ts';
 import { AccessCodesMismatchError } from '../classes/error/access-codes-mismatch.error.ts';
+import { AccessCodeStoreInterface } from '../classes/store/access-code-store.interface.ts';
 import { createStyles } from './default.styles.ts';
 
 const CODE_LENGTH = 4;
 
-export const SetSignInCodeView: React.FC = () => {
+const SetSignInCodeViewComponent: React.FC = () => {
+  const accessCode = useDependency(AccessCodeStoreInterface);
   const begin = useSubmit(SetAccessCodeControllerInterface);
   const confirm = useSubmit(ConfirmAccessCodeControllerInterface);
   const { theme } = useTheme();
@@ -20,7 +22,7 @@ export const SetSignInCodeView: React.FC = () => {
   const pinCodeRef = React.useRef({ shakeDots: () => undefined });
   const submittedCode = React.useRef<string | null>(null);
   const [code, setCode] = React.useState('');
-  const confirmation = begin.data?.step === 'confirm';
+  const confirmation = accessCode.confirmation;
   const inProcess = begin.inProcess || confirm.inProcess;
   const errorMessage = confirm.error instanceof AccessCodesMismatchError ? `${confirm.error.message}\n` : '';
 
@@ -29,6 +31,11 @@ export const SetSignInCodeView: React.FC = () => {
       pinCodeRef.current.shakeDots();
     }
   }, [confirm.error]);
+
+  React.useEffect(() => {
+    setCode('');
+    submittedCode.current = null;
+  }, [confirmation]);
 
   React.useEffect(() => {
     if (code.length !== CODE_LENGTH || submittedCode.current === code || inProcess) {
@@ -100,3 +107,5 @@ export const SetSignInCodeView: React.FC = () => {
     </Viewport>
   );
 };
+
+export const SetSignInCodeView = reactive(SetSignInCodeViewComponent);

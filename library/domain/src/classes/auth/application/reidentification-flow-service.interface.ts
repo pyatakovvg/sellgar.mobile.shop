@@ -6,9 +6,11 @@ export interface ReidentificationFlowInput {
   readonly phone: string;
 }
 
+export type ReidentificationFlowContext = Pick<ReidentificationFlowInput, 'identification' | 'phone'>;
+
 export abstract class ReidentificationFlowServiceInterface {
   abstract begin(input: ReidentificationFlowInput): void;
   abstract clear(): void;
   abstract complete(): Promise<void>;
-  abstract getPendingIdentification(): PendingIdentificationEntity | null;
+  abstract getPending(): ReidentificationFlowContext | null;
 }
