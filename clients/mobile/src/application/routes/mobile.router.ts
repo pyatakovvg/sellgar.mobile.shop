@@ -17,6 +17,7 @@ import {
 } from '@library/route-tokens';
 import { param, segments } from '@sellgar/app';
 import { Route, Router, ScreenAnimation } from '@sellgar/app/native';
+import { AuthLayout } from '@layout/auth';
 
 import { MainTabsLayout } from '../../layouts/main-tabs/src';
 import {
@@ -35,6 +36,7 @@ const createAnonymousBranch = (): Route => {
   return new Route({
     canMatch: [RequireAnonymousSessionPolicy.configure().onFail(Router.redirectToSaved({ replace: true }))],
     defaultTo: Router.firstAvailable(),
+    layouts: [],
     routes: [
       new Route({
         address: segments('sign-in-by-code'),

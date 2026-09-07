@@ -20,6 +20,7 @@
     "packages": [
       "clients/*",
       "utils/**/*",
+      "layouts/**/*",
       "library/**/*",
       "modules/**/*",
       "widgets/**/*"

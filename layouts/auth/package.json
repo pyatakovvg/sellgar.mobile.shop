@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "name": "@layout/auth",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "dependencies": {
+    "@library/design": "0.0.1",
+    "@library/kit": "0.0.1",
+    "@react-navigation/native": "7.3.18",
+    "react": "19.2.8",
+    "react-native": "0.87.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
+  },
+  "author": "",
+  "license": "ISC"
+}

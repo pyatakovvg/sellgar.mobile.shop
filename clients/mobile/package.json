@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@layout/auth": "0.0.1",
     "@library/domain": "0.0.1",
     "@library/kit": "0.0.1",
     "@library/route-tokens": "0.0.1",
@@ -44,7 +45,7 @@
     "react-native-safe-area-context": "5.9.1",
     "react-native-sha256": "1.4.10",
     "react-native-svg": "15.15.5",
-    "react-native-webview": "16.0.0",
+    "react-native-webview": "14.0.1",
     "react-native-worklets": "0.12.1",
     "reflect-metadata": "0.2.2",
     "use-sync-external-store": "1.6.0"
