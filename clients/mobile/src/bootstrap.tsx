@@ -29,15 +29,3 @@ AppRegistry.registerComponent(appName, () => AppView);
 app.initialize().catch((e) => {
   console.error('App init error:', e);
 });
-
-declare const module: {
-  readonly hot?: {
-    dispose(callback: () => void): void;
-  };
-};
-
-if (module.hot) {
-  module.hot.dispose(() => {
-    void app.dispose();
-  });
-}
