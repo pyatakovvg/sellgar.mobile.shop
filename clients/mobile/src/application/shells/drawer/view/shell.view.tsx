@@ -10,7 +10,7 @@ export const ShellView: React.FC<ShellContextInterface> = (props) => {
   const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   return (
-    <View pointerEvents="box-none" style={[styles.wrapper, { paddingBottom: bottom + scales[24] }]}>
+    <View pointerEvents="box-none" style={[styles.wrapper]}>
       <View style={styles.container}>{props.children}</View>
     </View>
   );
