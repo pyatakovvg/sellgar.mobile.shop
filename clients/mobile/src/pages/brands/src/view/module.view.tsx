@@ -1,13 +1,16 @@
-import React from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-
+import { useTheme } from '@library/kit';
 import { BrandCreateRoute, BrandRoute, ProductsRoute } from '@library/route-tokens';
 import { Collection, useLoaderData, useNavigate, useSubmit, useViewport, Viewport } from '@sellgar/app/native';
+
+import React from 'react';
+import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { BrandsPaginationControllerInterface } from '../classes/controller/brands-pagination/brands-pagination-controller.interface.ts';
 import { BrandsControllerInterface } from '../classes/controller/brands/brands-controller.interface.ts';
 
 export const ModuleView: React.FC = () => {
+  const { theme } = useTheme();
+
   const navigate = useNavigate();
   const runtime = useLoaderData(BrandsControllerInterface);
   const pagination = useLoaderData(BrandsPaginationControllerInterface);
@@ -16,6 +19,8 @@ export const ModuleView: React.FC = () => {
 
   return (
     <Viewport>
+      <Viewport.Refreshable color={theme.colors.text.status.destructive} />
+
       <Viewport.Slot.Sticky>
         <View style={styles.heading}>
           <Text style={styles.eyebrow}>Brands tab</Text>
@@ -104,7 +109,6 @@ export const ModuleView: React.FC = () => {
       <Viewport.Slot.Floating horizontal="end" vertical="bottom">
         <ScrollToStart />
       </Viewport.Slot.Floating>
-      <Viewport.Refreshable />
     </Viewport>
   );
 };
