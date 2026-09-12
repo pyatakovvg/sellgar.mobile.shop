@@ -1,25 +1,16 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { type TTheme, useTheme } from '@library/kit';
+import { scales, shadows, type TTheme, useTheme } from '@library/kit';
 import { type ShellContextInterface, useSafeAreaInsets } from '@sellgar/app/native';
 
 export const ShellView: React.FC<ShellContextInterface> = (props) => {
-  const { top } = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets();
   const { theme } = useTheme();
   const styles = React.useMemo(() => createStyles(theme), [theme]);
 
   return (
-    <View pointerEvents="box-none" style={[styles.wrapper, { paddingTop: top + 24 }]}>
-      <View
-        style={{
-          height: 10,
-          marginHorizontal: 16,
-          borderTopStartRadius: theme.numbers.radius.lg,
-          borderTopEndRadius: theme.numbers.radius.lg,
-          backgroundColor: theme.colors.background.surface.info,
-        }}
-      />
+    <View pointerEvents="box-none" style={[styles.wrapper]}>
       <View style={styles.container}>{props.children}</View>
     </View>
   );
@@ -30,13 +21,14 @@ const createStyles = (theme: TTheme) =>
     container: {
       backgroundColor: theme.colors.background.surface.default,
       borderRadius: theme.numbers.radius.xxl,
-      flexGrow: 1,
       flexShrink: 1,
       overflow: 'hidden',
     },
     wrapper: {
-      alignSelf: 'stretch',
-      height: '100%',
-      width: '100%',
+      flex: 0,
+      flexShrink: 1,
+      maxHeight: '100%',
+      padding: scales[24],
+      ...shadows().xs,
     },
   });

@@ -17,8 +17,10 @@ const Menu: React.FC<React.PropsWithChildren> = (props) => {
   const typeStyles = React.useMemo(() => createTypeStyle(theme, type), [theme, type]);
   const shapeStyles = React.useMemo(() => createShapeStyle(shape, type), [shape, type]);
 
-  const handlePress = (tabName: string) => {
+  const handlePress = (tab: React.ReactElement<ITabProps>) => {
+    const tabName = tab.props.name;
     setActiveTabName && setActiveTabName(tabName);
+    tab.props.onPress?.(tabName);
   };
 
   const menuStyles = React.useMemo(() => {
@@ -32,8 +34,15 @@ const Menu: React.FC<React.PropsWithChildren> = (props) => {
           const childElement = child as React.ReactElement<ITabProps>;
           return (
             <Pressable
+              accessibilityRole={'tab'}
+              accessibilityState={{
+                disabled: childElement.props.disabled,
+                selected: activeTabName === childElement.props.name,
+              }}
+              disabled={childElement.props.disabled}
+              key={childElement.key ?? childElement.props.name}
               style={[baseStyles.tab, i ? typeStyles.tab : {}]}
-              onPress={() => handlePress(childElement.props.name as string)}
+              onPress={() => handlePress(childElement)}
             >
               {React.cloneElement(childElement, {
                 size,

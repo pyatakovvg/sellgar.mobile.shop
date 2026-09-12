@@ -1,53 +1,32 @@
 import React from 'react';
+import { Text, View } from 'react-native';
 
+import { useTheme } from '../../../../../theme';
 import { Typography } from '../../../typography';
 
-import cn from 'classnames';
-import s from './default.module.scss';
+import { createStyles } from './default.styles.ts';
 
 interface IProps {
   size?: 'lg' | 'md' | 'sm';
-  style?: 'primary';
   isActive?: boolean;
   title: string;
-  name: string;
   leadIcon?: React.ReactNode;
   tailIcon?: React.ReactNode;
   badge?: React.ReactNode;
-  onClick?(): void;
-  disabled?: boolean;
 }
 
-export const Line: React.FC<React.PropsWithChildren<IProps>> = ({ size = 'lg', style = 'primary', ...props }) => {
-  const className = React.useMemo(
-    () =>
-      cn(
-        s.wrapper,
-        {
-          [s['size--lg']]: size === 'lg',
-          [s['size--md']]: size === 'md',
-          [s['size--sm']]: size === 'sm',
-        },
-        {
-          [s['style--primary']]: style === 'primary',
-        },
-        {
-          [s.active]: props.isActive,
-        },
-      ),
-    [size, style, props.isActive],
-  );
+export const Line: React.FC<IProps> = ({ size = 'lg', ...props }) => {
+  const { theme } = useTheme();
+  const styles = React.useMemo(() => createStyles(theme, size), [size, theme]);
 
   return (
-    <div className={className} role={'tab'} onClick={() => props.onClick && props.onClick()}>
-      {props.leadIcon && <div className={s['lead-icon']}>{props.leadIcon}</div>}
-      <div className={s.title}>
-        <Typography size={size === 'sm' ? 'caption-l' : 'body-s'} weight={'semi-bold'}>
-          <span>{props.title}</span>
-        </Typography>
-      </div>
-      {props.badge && <div className={s.badge}>{props.badge}</div>}
-      {props.tailIcon && <div className={s['tail-icon']}>{props.tailIcon}</div>}
-    </div>
+    <View style={[styles.wrapper, props.isActive && styles.wrapperActive]}>
+      {props.leadIcon ? <View style={styles.icon}>{props.leadIcon}</View> : null}
+      <Typography size={size === 'sm' ? 'caption-l' : 'body-s'} weight={'semi-bold'}>
+        <Text style={[styles.title, props.isActive && styles.titleActive]}>{props.title}</Text>
+      </Typography>
+      {props.badge ? <View style={styles.badge}>{props.badge}</View> : null}
+      {props.tailIcon ? <View style={styles.icon}>{props.tailIcon}</View> : null}
+    </View>
   );
 };

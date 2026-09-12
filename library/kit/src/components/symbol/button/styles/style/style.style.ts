@@ -49,10 +49,10 @@ export const createStyleStyle = (theme: TTheme, style: 'primary' | 'secondary' |
           backgroundColor: theme.colors.background.button.primary,
         },
         text: {
-          color: theme.colors.text.base.inverted,
+          color: theme.palette.base.white,
         },
         icon: {
-          color: theme.colors.icon.base.inverted,
+          color: theme.palette.base.white,
         },
       });
   }

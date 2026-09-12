@@ -18,8 +18,8 @@ import {
 import { param, segments } from '@sellgar/app';
 import { Route, Router, ScreenAnimation } from '@sellgar/app/native';
 import { AuthLayout } from '@layout/auth';
+import { TabsLayout } from '@layout/tabs';
 
-import { MainTabsLayout } from '../../layouts/main-tabs/src';
 import {
   RequireAnonymousSessionPolicy,
   RequireAuthenticatedSessionPolicy,
@@ -106,7 +106,7 @@ const createAuthenticatedBranch = (): Route => {
       ),
     ],
     defaultTo: Router.firstAvailable(),
-    layouts: [MainTabsLayout],
+    layouts: [TabsLayout],
     routes: [
       new Route({
         address: segments('products'),

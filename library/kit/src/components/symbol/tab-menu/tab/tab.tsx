@@ -1,7 +1,7 @@
 import React from 'react';
 
-// import { Fill } from './fill';
-// import { Line } from './line';
+import { Fill } from './fill';
+import { Line } from './line';
 import { Segmented } from './segmented';
 
 export interface IProps {
@@ -16,14 +16,17 @@ export interface IProps {
   tailIcon?: React.ReactNode;
   badge?: React.ReactNode;
   onPress?(tabName: string): void;
+  disabled?: boolean;
 }
 
 export const Tab: React.FC<React.PropsWithChildren<IProps>> = ({ type, ...props }) => {
-  // if (type === 'line') {
-  //   return <Line {...props} style={'primary'} onClick={() => props.onClick && props.onClick(props.name)} />;
-  // } else if (type === 'segmented') {
-  //   return <Segmented {...props} style={'primary'} onClick={() => props.onClick && props.onClick(props.name)} />;
-  // }
-  // return <Fill {...props} onClick={() => props.onClick && props.onClick(props.name)} />;
-  return <Segmented {...props} style={'primary'} onPress={() => props.onPress && props.onPress(props.name)} />;
+  if (type === 'line') {
+    return <Line {...props} />;
+  }
+
+  if (type === 'segmented') {
+    return <Segmented {...props} style={'primary'} />;
+  }
+
+  return <Fill {...props} />;
 };

@@ -21,7 +21,7 @@ Android React Native playground для стабилизации `@sellgar/app/na
 - строгие Route params и переход через `useNavigate()`;
 - две взаимоисключающие policy-ветки: anonymous и authenticated;
 - основной native navigation host с route screens, режимом без tab bar для anonymous
-  ветки и `MainTabsLayout` для authenticated ветки;
+  ветки и `TabsLayout` для authenticated ветки;
 - `TabItem` поверх общего core navigation control;
 - retained screen history для tab, link и imperative navigation;
 - Stack flow для `Route.routes`: новый target/params показывает локальный
@@ -77,7 +77,7 @@ adb reverse tcp:8081 tcp:8081
 Native facade повторяет имена и форму React facade; platform-specific различия
 ограничены presentation types, native navigation controls и bridge. Native
 screen stack, Drawer и tab bar являются только физической projection core
-navigation state. `MainTabsLayout` владеет визуальным tab bar, а `TabItem`
+navigation state. `TabsLayout` владеет визуальным tab bar, а `TabItem`
 отправляет обычный tokenized navigation request. Core хранит authoritative
 history и `focused <-> retained` lifecycle; native host отображает этот snapshot
 и не создаёт параллельную логическую state machine.

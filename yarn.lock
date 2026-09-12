@@ -783,6 +783,7 @@ __metadata:
     "@babel/runtime": "npm:7.29.7"
     "@layout/auth": "npm:0.0.1"
     "@layout/main": "npm:0.0.1"
+    "@layout/tabs": "npm:0.0.1"
     "@library/domain": "npm:0.0.1"
     "@library/kit": "npm:0.0.1"
     "@library/route-tokens": "npm:0.0.1"
@@ -1750,6 +1751,20 @@ __metadata:
     "@library/kit": "npm:0.0.1"
     "@sellgar/app": "npm:0.0.1"
     "@types/react": "npm:19.2.18"
+    react: "npm:19.2.8"
+    react-native: "npm:0.87.1"
+    typescript: "npm:7.0.2"
+  languageName: unknown
+  linkType: soft
+
+"@layout/tabs@npm:0.0.1, @layout/tabs@workspace:layouts/tabs":
+  version: 0.0.0-use.local
+  resolution: "@layout/tabs@workspace:layouts/tabs"
+  dependencies:
+    "@library/route-tokens": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    "@widget/sign-out": "npm:0.0.1"
     react: "npm:19.2.8"
     react-native: "npm:0.87.1"
     typescript: "npm:7.0.2"
@@ -2944,6 +2959,18 @@ __metadata:
     "@utils/format": "npm:0.0.1"
     react: "npm:19.2.8"
     react-hook-form: "npm:7.87.0"
+    react-native: "npm:0.87.1"
+  languageName: unknown
+  linkType: soft
+
+"@widget/sign-out@npm:0.0.1, @widget/sign-out@workspace:widgets/sign-out":
+  version: 0.0.0-use.local
+  resolution: "@widget/sign-out@workspace:widgets/sign-out"
+  dependencies:
+    "@library/domain": "npm:0.0.1"
+    "@sellgar/app": "npm:0.0.1"
+    "@types/react": "npm:19.2.18"
+    react: "npm:19.2.8"
     react-native: "npm:0.87.1"
   languageName: unknown
   linkType: soft

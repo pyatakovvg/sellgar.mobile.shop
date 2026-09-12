@@ -1,9 +1,9 @@
-import { useTheme } from '@library/kit';
+import { useTheme, Button } from '@library/kit';
 import { BrandCreateRoute, BrandRoute, ProductsRoute } from '@library/route-tokens';
 import { Collection, useLoaderData, useNavigate, useSubmit, useViewport, Viewport } from '@sellgar/app/native';
 
 import React from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { BrandsPaginationControllerInterface } from '../classes/controller/brands-pagination/brands-pagination-controller.interface.ts';
 import { BrandsControllerInterface } from '../classes/controller/brands/brands-controller.interface.ts';
@@ -30,50 +30,41 @@ export const ModuleView: React.FC = () => {
           </Text>
         </View>
       </Viewport.Slot.Sticky>
+
+      <Viewport.Slot>
+        <View style={styles.item}>
+          <Text style={styles.copy}>
+            Switching tabs must retain the previous core runtime and its controller state.
+          </Text>
+        </View>
+        <View style={styles.item}>
+          <Button accessibilityLabel="Open brand drawer" onPress={() => void navigate.to(BrandCreateRoute)}>
+            Open brand drawer
+          </Button>
+        </View>
+        <View style={styles.item}>
+          <Pressable
+            accessibilityLabel="Open products tab"
+            accessibilityRole="button"
+            onPress={() => void navigate.to(ProductsRoute)}
+            style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
+          >
+            <Text style={styles.buttonText}>Open products tab</Text>
+          </Pressable>
+        </View>
+        <View style={styles.item}>
+          <Pressable
+            accessibilityLabel="Open brand #45"
+            accessibilityRole="button"
+            onPress={() => void navigate.to(BrandRoute, { params: { uuid: '45' } })}
+            style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
+          >
+            <Text style={styles.buttonText}>Open brand #45</Text>
+          </Pressable>
+        </View>
+      </Viewport.Slot>
+
       <Viewport.Collection>
-        <Collection.Item>
-          <View style={styles.item}>
-            <Text style={styles.copy}>
-              Switching tabs must retain the previous core runtime and its controller state.
-            </Text>
-          </View>
-        </Collection.Item>
-        <Collection.Item>
-          <View style={styles.item}>
-            <Pressable
-              accessibilityLabel="Open brand drawer"
-              accessibilityRole="button"
-              onPress={() => void navigate.to(BrandCreateRoute)}
-              style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
-            >
-              <Text style={styles.buttonText}>Open brand drawer</Text>
-            </Pressable>
-          </View>
-        </Collection.Item>
-        <Collection.Item>
-          <View style={styles.item}>
-            <Pressable
-              accessibilityLabel="Open products tab"
-              accessibilityRole="button"
-              onPress={() => void navigate.to(ProductsRoute)}
-              style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
-            >
-              <Text style={styles.buttonText}>Open products tab</Text>
-            </Pressable>
-          </View>
-        </Collection.Item>
-        <Collection.Item>
-          <View style={styles.item}>
-            <Pressable
-              accessibilityLabel="Open brand #45"
-              accessibilityRole="button"
-              onPress={() => void navigate.to(BrandRoute, { params: { uuid: '45' } })}
-              style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
-            >
-              <Text style={styles.buttonText}>Open brand #45</Text>
-            </Pressable>
-          </View>
-        </Collection.Item>
         <Collection.Section>
           {Array.from({ length: pagination.count }, (_, index) => (
             <Collection.Item key={`brand-probe-${index}`}>
@@ -100,12 +91,13 @@ export const ModuleView: React.FC = () => {
             <Text style={styles.copy}>No brands</Text>
           </View>
         </Collection.Empty>
-        <Collection.LoadMore inProcess={loadNextPage.inProcess} onLoad={loadNextPage}>
-          <View style={styles.loadingMore}>
-            <ActivityIndicator color="#9d91ff" />
-          </View>
-        </Collection.LoadMore>
+        <Collection.LoadMore
+          color={theme.colors.text.status.success}
+          inProcess={loadNextPage.inProcess}
+          onLoad={loadNextPage}
+        />
       </Viewport.Collection>
+
       <Viewport.Slot.Floating horizontal="end" vertical="bottom">
         <ScrollToStart />
       </Viewport.Slot.Floating>
@@ -145,16 +137,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   item: { backgroundColor: '#11131a', paddingHorizontal: 24, paddingVertical: 8 },
-  loadingMore: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#222631',
-    borderRadius: 20,
-    height: 40,
-    justifyContent: 'center',
-    marginBottom: 16,
-    width: 40,
-  },
   pressed: { opacity: 0.78 },
   probe: { color: '#6fd6b3', fontSize: 14, fontWeight: '700' },
   row: { backgroundColor: '#222631', borderRadius: 12, color: '#d7d9e2', fontSize: 15, padding: 16 },

@@ -13,7 +13,7 @@ import { UseBindings } from '@sellgar/app';
 import { MainLayout } from '@layout/main';
 
 import { Status } from './components/status';
-import { Fallback } from './components/frame/fallback';
+import { Fallback } from './components/fallback';
 import { MobileBindings } from './bindings';
 import { ApplicationLifecycleInitializer, ResolveSessionInitializer } from './initializers';
 import { createMobileRouter } from './routes';
@@ -30,7 +30,7 @@ export class MobileApplication extends Application {
     app.components({
       exception: <Status title="Module failed" tone="error" />,
       failed: <Status title="Application failed" tone="error" />,
-      fallback: <Status title="Loading module" loading />,
+      fallback: <Fallback />,
       forbidden: <Status title="Forbidden" tone="error" />,
       notFound: <Status title="Route not found" tone="error" />,
       splash: <Status title="Starting core runtime" loading />,

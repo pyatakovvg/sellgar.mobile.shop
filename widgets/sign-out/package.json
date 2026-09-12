@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "type": "module",
+  "name": "@widget/sign-out",
+  "version": "0.0.1",
+  "description": "Authenticated session sign-out widget",
+  "license": "UNLICENSED",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@library/domain": "0.0.1",
+    "@sellgar/app": "0.0.1",
+    "react": "19.2.8",
+    "react-native": "0.87.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18"
+  }
+}

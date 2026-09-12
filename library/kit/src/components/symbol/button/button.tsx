@@ -9,6 +9,7 @@ import { createStyleStyle } from './styles/style/style.style.ts';
 import { createShapeStyle } from './styles/shape/shape.style.ts';
 import { createTargetStyle } from './styles/target/target.style.ts';
 import { createDisabledStyle } from './styles/disabled/disabled.style.ts';
+
 import { Animate } from '../../utils';
 import { Icon } from '../icon';
 

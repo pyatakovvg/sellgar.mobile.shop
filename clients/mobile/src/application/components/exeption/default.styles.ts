@@ -7,8 +7,8 @@ export const createStyles = (theme: TTheme) => {
     wrapper: {
       alignItems: 'center',
       gap: 16,
-      padding: 40,
       justifyContent: 'center',
+      padding: 40,
     },
     text: { color: theme.colors.text.base.primary },
   });

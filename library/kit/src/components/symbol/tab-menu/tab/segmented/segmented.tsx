@@ -20,7 +20,7 @@ interface IProps {
   leadIcon?: React.ReactNode;
   tailIcon?: React.ReactNode;
   badge?: React.ReactNode;
-  onPress?(): void;
+  onPress?(tabName: string): void;
   disabled?: boolean;
 }
 
