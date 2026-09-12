@@ -5,8 +5,9 @@ import { StyleSheet } from 'react-native';
 export const createStyles = (theme: TTheme) => {
   return StyleSheet.create({
     wrapper: {
-      alignItems: 'center',
+      flex: 1,
       gap: 16,
+      alignItems: 'center',
       justifyContent: 'center',
       padding: 40,
     },

@@ -14,6 +14,8 @@ import { MainLayout } from '@layout/main';
 
 import { Status } from './components/status';
 import { Fallback } from './components/fallback';
+import { Exception } from './components/exeption';
+
 import { MobileBindings } from './bindings';
 import { ApplicationLifecycleInitializer, ResolveSessionInitializer } from './initializers';
 import { createMobileRouter } from './routes';
@@ -28,8 +30,8 @@ export class MobileApplication extends Application {
     app.layouts([MainLayout]);
 
     app.components({
-      exception: <Status title="Module failed" tone="error" />,
-      failed: <Status title="Application failed" tone="error" />,
+      exception: <Exception />,
+      failed: <Exception />,
       fallback: <Fallback />,
       forbidden: <Status title="Forbidden" tone="error" />,
       notFound: <Status title="Route not found" tone="error" />,
@@ -37,7 +39,7 @@ export class MobileApplication extends Application {
     });
 
     app.routing({
-      exception: <Status title="Nested route failed" tone="error" />,
+      exception: <Exception />,
       fallback: <Fallback />,
       forbidden: <Status title="Nested route forbidden" tone="error" />,
       notFound: <Status title="Nested route not found" tone="error" />,
