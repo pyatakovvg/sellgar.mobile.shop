@@ -14,8 +14,6 @@ export class BrandsController extends BrandsControllerInterface {
     const startedAt = Date.now();
     await delay(1200, signal);
 
-    throw Error('kjkjhjkh');
-
     return Object.freeze({
       duration: Date.now() - startedAt,
       instance: this.instance,

@@ -10,6 +10,7 @@ export const createStyles = (theme: TTheme) => {
       alignItems: 'center',
       justifyContent: 'center',
       padding: 40,
+      backgroundColor: theme.colors.background.surface.default,
     },
     text: { color: theme.colors.text.base.primary },
   });
