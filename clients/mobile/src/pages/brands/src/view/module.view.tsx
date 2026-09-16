@@ -1,6 +1,7 @@
 import { useTheme, Button } from '@library/kit';
 import { BrandCreateRoute, BrandRoute, ProductsRoute } from '@library/route-tokens';
-import { Collection, useLoaderData, useNavigate, useSubmit, useViewport, Viewport } from '@sellgar/app/native';
+import { Collection, useLoaderData, useNavigate, useSubmit, useViewport, Viewport, WidgetHost } from '@sellgar/app/native';
+import { RuntimeProbeWidget } from '@widget/runtime-probe';
 
 import React from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -28,6 +29,7 @@ export const ModuleView: React.FC = () => {
           <Text style={styles.probe}>
             controller #{runtime.instance}, loader #{runtime.loads}, {runtime.duration} ms
           </Text>
+          <WidgetHost token={RuntimeProbeWidget} />
         </View>
       </Viewport.Slot.Sticky>
 

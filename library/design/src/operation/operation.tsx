@@ -23,7 +23,7 @@ export const Operation: React.FC<IProps> = (props) => {
       <View style={baseStyles.info}>
         <View style={baseStyles.description}>
           <Typography size={'caption-l'} weight={'medium'}>
-            <Text style={baseStyles.description_text} numberOfLines={1} ellipsizeMode="tail" lineBreakMode="tail">
+            <Text style={baseStyles.description_text} numberOfLines={1} ellipsizeMode="tail">
               {props.data.description}
             </Text>
           </Typography>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, type TextInputInstance } from 'react-native';
 
 import type {
   UserRequestAlertViewProps,
@@ -30,7 +30,7 @@ export const ConfirmUserRequest: React.FC<UserRequestConfirmViewProps> = ({ appl
 );
 
 export const PromptUserRequest: React.FC<UserRequestPromptViewProps> = ({ apply, cancel, request }) => {
-  const input = React.useRef<TextInput>(null);
+  const input = React.useRef<TextInputInstance>(null);
   const [value, setValue] = React.useState(request.payload.defaultValue ?? '');
 
   useScreenAutoFocus(input);

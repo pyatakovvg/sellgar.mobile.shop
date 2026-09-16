@@ -3,7 +3,8 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-nati
 
 import { ProductModifyRoute } from '@library/route-tokens';
 import type { RouteParams } from '@sellgar/app';
-import { NavItem, useLoaderData, useNavigate, useParams, useSubmit, Viewport } from '@sellgar/app/native';
+import { NavItem, useLoaderData, useNavigate, useParams, useSubmit, Viewport, WidgetHost } from '@sellgar/app/native';
+import { RuntimeProbeWidget } from '@widget/runtime-probe';
 
 import { ProductDetailControllerInterface } from '../classes/controller/product-detail/product-detail-controller.interface.ts';
 
@@ -25,6 +26,7 @@ export const ModuleView: React.FC = () => {
           <Text style={styles.probe}>
             controller #{runtime.instance}, loader #{runtime.loads}, {runtime.duration} ms
           </Text>
+          <WidgetHost token={RuntimeProbeWidget} />
           <NavItem
             navigation={(navigation) =>
               navigation.to(ProductModifyRoute, { params: { uuid: 'native-84' }, replace: true })

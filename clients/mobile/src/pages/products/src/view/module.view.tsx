@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { BrandsRoute, ProductModifyRoute } from '@library/route-tokens';
-import { useLoaderData, useNavigate, useSubmit, Viewport } from '@sellgar/app/native';
+import { useLoaderData, useNavigate, useSubmit, Viewport, WidgetHost } from '@sellgar/app/native';
+import { RuntimeProbeWidget } from '@widget/runtime-probe';
 
 import { ProductsFilterControllerInterface } from '../classes/controller/products-filter/products-filter-controller.interface.ts';
 import { ProductsControllerInterface } from '../classes/controller/products/products-controller.interface.ts';
@@ -27,6 +28,7 @@ export const ModuleView: React.FC = () => {
           </Text>
           <Text style={styles.query}>query search: {filter.search ?? 'none'}</Text>
           <Text style={styles.query}>data filter: {runtime.search ?? 'none'}</Text>
+          <WidgetHost token={RuntimeProbeWidget} />
           <Action
             inProcess={submitFilter.inProcess}
             label={filter.search ? 'Clear query' : 'Set query native'}

@@ -30,6 +30,7 @@
     "@react-native-firebase/messaging": "26.4.0",
     "@sbaiahmed1/react-native-blur": "6.0.1",
     "@sellgar/app": "0.0.1",
+    "@widget/runtime-probe": "0.0.1",
     "mobx": "6.16.1",
     "mobx-react": "9.2.2",
     "react": "19.2.8",

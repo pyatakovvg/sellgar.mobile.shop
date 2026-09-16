@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "type": "module",
+  "name": "@widget/runtime-probe",
+  "version": "0.0.1",
+  "description": "Manual widget runtime lifecycle probe",
+  "license": "UNLICENSED",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@sellgar/app": "0.0.1",
+    "react": "19.2.8",
+    "react-native": "0.87.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18"
+  }
+}
