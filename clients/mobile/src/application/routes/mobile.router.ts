@@ -28,7 +28,7 @@ import {
 
 export const createMobileRouter = (): Router => {
   return new Router({
-    routes: [createAnonymousBranch(), createAuthenticatedBranch()],
+    routes: [createAuthenticatedBranch()],
   });
 };
 
@@ -98,12 +98,12 @@ const createAnonymousBranch = (): Route => {
 const createAuthenticatedBranch = (): Route => {
   return new Route({
     canMatch: [
-      RequireAuthenticatedSessionPolicy.configure().onFail(
-        Router.redirectTo(SignInByCodeRoute, {
-          replace: true,
-          saveCurrentLocation: true,
-        }),
-      ),
+      // RequireAuthenticatedSessionPolicy.configure().onFail(
+      //   Router.redirectTo(SignInByCodeRoute, {
+      //     replace: true,
+      //     saveCurrentLocation: true,
+      //   }),
+      // ),
     ],
     defaultTo: Router.firstAvailable(),
     layouts: [TabsLayout],
