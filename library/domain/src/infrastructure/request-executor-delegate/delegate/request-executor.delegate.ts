@@ -8,8 +8,8 @@ import {
   type RequestOperation,
 } from '@sellgar/app';
 
-import { AuthServiceInterface } from '../../classes/auth';
-import { SessionRestoreUsecaseInterface } from '../../classes/session';
+import { AuthServiceInterface } from '../../../classes/auth';
+import { SessionRestoreUsecaseInterface } from '../../../classes/session';
 import { RequestExecutorDelegateInterface } from './request-executor-delegate.interface.ts';
 
 @Injectable()

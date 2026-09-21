@@ -1,10 +1,11 @@
-import { Inject, Injectable, RequestExecutorInterface } from '@sellgar/app';
+import { Inject, Injectable } from '@sellgar/app';
 import { validateOrReject } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
 import { ConfigInterface } from '../../../../infrastructure/config';
 import { DeviceInfoServiceInterface } from '../../../../infrastructure/device-info';
 import { HttpRequest } from '../../../../infrastructure/http-client';
+import { RequestExecutorDelegateInterface } from '../../../../infrastructure/request-executor-delegate';
 import { OperationLimitsGatewayInterface } from './operation-limits-gateway.interface.ts';
 
 import type { OperationLimitsInput } from './input/operation-limits.input.ts';
@@ -16,7 +17,7 @@ export class OperationLimitsGateway implements OperationLimitsGatewayInterface {
   constructor(
     @Inject(ConfigInterface) private readonly config: ConfigInterface,
     @Inject(DeviceInfoServiceInterface) private readonly deviceService: DeviceInfoServiceInterface,
-    @Inject(RequestExecutorInterface) private readonly requestExecutor: RequestExecutorInterface,
+    @Inject(RequestExecutorDelegateInterface) private readonly requestExecutor: RequestExecutorDelegateInterface,
   ) {}
 
   async getLimits(params: OperationLimitsInput): Promise<OperationLimitsResultEntity> {

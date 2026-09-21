@@ -21,7 +21,7 @@ No refresh token or storage detail is exposed to the delegate. Auth gateways con
 The delegate registers a task-local `request.use()` callback on the existing core executor:
 
 `prepareRequest(config)` returns the same configuration after preparing credentials; it does not replace the
-signal, queue options or operation. Token headers remain inside the existing gateways, which are not migrated yet.
+signal, queue options or operation. Token headers remain inside the existing gateways.
 
 | Condition                                         | Preparation                                                      | Original operation  |
 | ------------------------------------------------- | ---------------------------------------------------------------- | ------------------- |
@@ -46,5 +46,16 @@ delegate, directly or transitively: that would introduce recursive preparation a
 
 ## Integration status
 
-The binding is available for review. No gateway uses it yet. Gateway migration requires separate approval;
-authentication, session policies, HTTP transport and core behavior are unchanged.
+The delegate is injected into the gateways that used refresh preparation in the legacy application:
+balance, bank-cards, change-phone, commission, deposit, features, identification, operation-limits,
+operation, pay-category, pay-method, profile, session and withdrawal.
+
+Auth, OTP, sign-up, password and mobile-version gateways retain the ordinary core executor, matching
+their legacy behavior without refresh preparation. In particular, refresh and restore belong to
+AuthGateway: using the delegate there would create a dependency cycle and recursive preparation.
+
+SessionGateway can use the delegate: SessionRestoreUsecase depends on session storage, device info
+and AuthService, not on SessionGateway or SessionService. The preparation chain therefore ends at
+AuthGateway and the ordinary executor.
+
+Authentication methods, session policies, HTTP transport and core behavior are unchanged.

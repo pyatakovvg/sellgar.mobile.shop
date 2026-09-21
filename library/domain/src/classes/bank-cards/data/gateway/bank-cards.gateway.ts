@@ -1,10 +1,11 @@
-import { Inject, Injectable, RequestExecutorInterface } from '@sellgar/app';
+import { Inject, Injectable } from '@sellgar/app';
 import { validateOrReject } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
 import { ConfigInterface } from '../../../../infrastructure/config';
 import { DeviceInfoServiceInterface } from '../../../../infrastructure/device-info';
 import { HttpRequest } from '../../../../infrastructure/http-client';
+import { RequestExecutorDelegateInterface } from '../../../../infrastructure/request-executor-delegate';
 
 import { BankCardsGatewayInterface } from './bank-cards-gateway.interface.ts';
 
@@ -18,7 +19,7 @@ export class BankCardsGateway implements BankCardsGatewayInterface {
   constructor(
     @Inject(ConfigInterface) private readonly config: ConfigInterface,
     @Inject(DeviceInfoServiceInterface) private readonly deviceService: DeviceInfoServiceInterface,
-    @Inject(RequestExecutorInterface) private readonly requestExecutor: RequestExecutorInterface,
+    @Inject(RequestExecutorDelegateInterface) private readonly requestExecutor: RequestExecutorDelegateInterface,
   ) {}
 
   async verify(bin: string): Promise<BinCheckResultEntity> {
