@@ -8,6 +8,7 @@ import { DeviceInfoBinding } from '../infrastructure/device-info/device-info.bin
 import { PushNotificationBinding } from '../infrastructure/push-notification/push-notification.binding.ts';
 import { SecureStorageBinding } from '../infrastructure/secure-storage/secure-storage.binding.ts';
 import { StorageBinding } from '../infrastructure/storage/storage.binding.ts';
+import { RequestExecutorDelegateBinding } from '../infrastructure/request-executor-delegate/request-executor-delegate.binding.ts';
 import { AuthBinding } from './auth/auth.binding.ts';
 import { BalanceBinding } from './balance/balance.binding.ts';
 import { BankCardsBinding } from './bank-cards/bank-cards.binding.ts';
@@ -41,6 +42,7 @@ export class DomainBinding extends BindingModuleInterface {
     new PushNotificationBinding().register(registry);
     new SecureStorageBinding().register(registry);
     new StorageBinding().register(registry);
+    new RequestExecutorDelegateBinding().register(registry);
     new AuthBinding().register(registry);
     new BalanceBinding().register(registry);
     new BankCardsBinding().register(registry);

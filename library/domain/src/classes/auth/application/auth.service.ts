@@ -25,6 +25,14 @@ export class AuthService implements AuthServiceInterface {
     return this.authStorage.getAccessToken();
   }
 
+  isAccessTokenExpired(): boolean {
+    return this.authStorage.checkExpirationDate();
+  }
+
+  refreshStoredCredentials(): Promise<AuthEntity> {
+    return this.refresh(this.authStorage.getRefreshToken());
+  }
+
   async signInByCredentials(phone: string, password: string): Promise<LoginWithIdentificationEntity> {
     const result = await this.authGateway.signInByCredentials(phone, password);
 

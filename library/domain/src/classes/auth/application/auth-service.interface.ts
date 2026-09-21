@@ -9,6 +9,8 @@ import type { AuthStartInput } from '../data/gateway/input/auth-start.input.ts';
 
 export abstract class AuthServiceInterface {
   abstract getAccessToken(): string;
+  abstract isAccessTokenExpired(): boolean;
+  abstract refreshStoredCredentials(): Promise<AuthEntity>;
   abstract restore(dto: SessionRestoreInput): Promise<AuthEntity>;
   abstract refresh(refreshToken: string): Promise<AuthEntity>;
   abstract signInByCredentials(phone: string, password: string): Promise<LoginWithIdentificationEntity>;
