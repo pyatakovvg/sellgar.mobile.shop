@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "@types/react": "19.3.0"
+  },
+  "peerDependencies": {
+    "reflect-metadata": "^0.2.2"
   }
 }

@@ -13,6 +13,27 @@ root-hoisted dependency tree. Native packages used by the application or by a
 workspace library must also be declared directly by `@client/mobile` so React
 Native autolinking can discover them.
 
+## Владение зависимостями
+
+`@client/mobile` предоставляет Babel, Metro, TypeScript, React, React Native и
+нативные библиотеки. Framework не объявляет их в `dependencies` или
+`devDependencies`: платформенные runtime-зависимости описаны как optional peers,
+а инструменты сборки принадлежат host.
+
+Внутренние зависимости framework — `inversify`, `mobx`, `mobx-react` и
+`react-error-boundary`. Web-only peers не нужно добавлять в mobile host.
+
+Host также предоставляет обязательные peers `class-transformer`,
+`class-validator` и `reflect-metadata`. Workspace-пакет, который подключает
+framework или другой пакет с этими требованиями, объявляет их в
+`peerDependencies`, если они ещё не являются его прямыми зависимостями.
+Наличие библиотеки в корневом `node_modules` само по себе не заменяет декларацию.
+
+После изменения manifest framework нужно выполнить `yarn` из корня монорепы.
+Обновление нативных библиотек требует пересборки приложения; перезапуск Metro
+не обновляет native binary. Git submodule обновляется отдельно от Yarn, с
+сохранением локальных изменений.
+
 ## Commands
 
 Run commands from the repository root:

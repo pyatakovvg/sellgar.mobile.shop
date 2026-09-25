@@ -23,7 +23,8 @@
     "typescript": "7.0.2"
   },
   "peerDependencies": {
-    "react-native": "0.87.1"
+    "react-native": "0.87.1",
+    "reflect-metadata": "^0.2.2"
   },
   "author": "",
   "license": "ISC"

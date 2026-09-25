@@ -22,5 +22,8 @@
     "typescript": "7.0.2"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "peerDependencies": {
+    "reflect-metadata": "^0.2.2"
+  }
 }
