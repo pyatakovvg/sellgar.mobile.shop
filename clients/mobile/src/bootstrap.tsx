@@ -14,6 +14,8 @@ const app = new MobileApplication({
   }),
 });
 
+app.reporter([]);
+
 app.compose();
 
 const ApplicationView = app.createView();
