@@ -6,6 +6,6 @@
   "main": "src/index.ts",
   "dependencies": {
     "react-native-sha256": "1.4.10",
-    "uuid": "14.0.2"
+    "uuid": "14.0.3"
   }
 }
